@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/pages/home-page.dart';
-import 'package:flutter_csm_tecnologia/pages/institition-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/home-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/theme/theme.dart';
 
 void main() => runApp(MyApp());

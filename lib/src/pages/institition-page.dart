@@ -87,7 +87,12 @@ class InstPage extends StatelessWidget {
               height: 10,
             ),
             TextField(
-              style: TextStyle(color: Colors.white),
+              onTap: () {
+                //TODO: decidir si se realiza la consulta directamente o cambiar a otra pagina de busqueda
+
+                showSearch(context: null, delegate: null);
+              },
+              style: TextStyle(color: Colors.black),
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 errorText: null,
