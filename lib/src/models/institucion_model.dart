@@ -1,9 +1,12 @@
 import 'dart:convert';
 
-/* List<Instituciones> institucionesFromJson(String str) => List<Instituciones>.from(json.decode(str).map((x) => Instituciones.fromJson(x)));
+List<Instituciones> institucionesFromJson(String str) =>
+    List<Instituciones>.from(
+        json.decode(str).map((x) => Instituciones.fromJson(x)));
 
-String institucionesToJson(List<Instituciones> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
- */
+String institucionesToJson(List<Instituciones> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Instituciones {
   Instituciones({
     this.id,
