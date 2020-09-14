@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+/* import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+ */
+import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    /*  final institucionesProvider = new InstitucionesProvider();
+    institucionesProvider.getInstituciones();
+ */
     final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -45,6 +51,7 @@ class InstPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
+          height: _screenSize.height * 0.34,
           width: _screenSize.width * 1,
           /*  width: double.infinity,
           height: _screenSize.height * 0.4, */
@@ -61,7 +68,7 @@ class InstPage extends StatelessWidget {
       children: [
         _fondoAzul,
         Positioned(
-          top: 390.0,
+          top: _screenSize.height * 0.66,
           child: _institutionImage,
         ),
         _whereStudy,
@@ -84,13 +91,17 @@ class InstPage extends StatelessWidget {
                   fontSize: 20.0),
             ),
             SizedBox(
-              height: 10,
+              height: 20.0,
             ),
             TextField(
               onTap: () {
-                //TODO: decidir si se realiza la consulta directamente o cambiar a otra pagina de busqueda
+                showSearch(
+                  context: context,
+                  delegate: DataSearch(),
+                  query: 'hola',
+                );
 
-                showSearch(context: null, delegate: null);
+                //TODO: decidir si se realiza la consulta directamente o cambiar a otra pagina de busqueda
               },
               style: TextStyle(color: Colors.black),
               cursorColor: Colors.black,
@@ -116,7 +127,7 @@ class InstPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             RaisedButton(
               color: Colors.teal,
@@ -131,7 +142,7 @@ class InstPage extends StatelessWidget {
               /* snapshot.hasData ? () => _login(context, bloc) : null */
             ),
             SizedBox(
-              height: 40.0,
+              height: 20.0,
             ),
           ],
         ),

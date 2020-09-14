@@ -19,4 +19,4 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _NavegacionModel with ChangeNotifier {}
+/* class _NavegacionModel with ChangeNotifier {} */
