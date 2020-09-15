@@ -98,8 +98,6 @@ class InstPage extends StatelessWidget {
                   context: context,
                   delegate: DataSearch(),
                 );
-
-                //TODO: decidir si se realiza la consulta directamente o cambiar a otra pagina de busqueda
               },
               style: TextStyle(color: Colors.black),
               cursorColor: Colors.black,
@@ -115,7 +113,7 @@ class InstPage extends StatelessWidget {
                 labelStyle: TextStyle(color: Colors.black, fontSize: 20),
                 labelText: searchModalRoute,
                 hintStyle: TextStyle(color: Colors.black),
-                hintText: 'Santa Librada',
+                hintText: 'Institucion',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -127,21 +125,36 @@ class InstPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            RaisedButton(
-              color: Colors.teal,
-              padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-              shape: StadiumBorder(),
-              elevation: 3.0,
-              child: Text(
-                'Buscar',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              onPressed: () {},
-              /* snapshot.hasData ? () => _login(context, bloc) : null */
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
+            (searchModalRoute != null)
+                ? RaisedButton(
+                    color: Colors.teal,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                    shape: StadiumBorder(),
+                    elevation: 3.0,
+                    child: Text(
+                      'Ingresar',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    onPressed: () {},
+                    /* snapshot.hasData ? () => _login(context, bloc) : null */
+                  )
+                : /* RaisedButton(
+                    color: Colors.teal,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                    shape: StadiumBorder(),
+                    elevation: 3.0,
+                    child: Text(
+                      'Buscar',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    onPressed: null,
+                    /* snapshot.hasData ? () => _login(context, bloc) : null */
+                  ), */
+                SizedBox(
+                    height: 20.0,
+                  ),
           ],
         ),
       ),
