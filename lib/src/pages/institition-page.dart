@@ -5,11 +5,9 @@ import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InstPage extends StatelessWidget {
+  final institucionesProvider = new InstitucionesProvider();
   @override
   Widget build(BuildContext context) {
-    final institucionesProvider = new InstitucionesProvider();
-    institucionesProvider.getInstituciones();
-
     /* final _screenSize = MediaQuery.of(context).size; */
     return Scaffold(
       body: Stack(
@@ -77,6 +75,7 @@ class InstPage extends StatelessWidget {
   }
 
   Widget _crearTextField(BuildContext context) {
+    final searchModalRoute = ModalRoute.of(context).settings.arguments;
     return Center(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(30),
@@ -98,7 +97,6 @@ class InstPage extends StatelessWidget {
                 showSearch(
                   context: context,
                   delegate: DataSearch(),
-                  query: 'hola',
                 );
 
                 //TODO: decidir si se realiza la consulta directamente o cambiar a otra pagina de busqueda
@@ -115,7 +113,7 @@ class InstPage extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.white38,
                 labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-                labelText: 'Institución:',
+                labelText: searchModalRoute,
                 hintStyle: TextStyle(color: Colors.black),
                 hintText: 'Santa Librada',
                 border: OutlineInputBorder(

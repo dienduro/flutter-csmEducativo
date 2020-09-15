@@ -65,7 +65,11 @@ class DataSearch extends SearchDelegate {
         return ListTile(
           leading: Icon(Icons.autorenew),
           title: Text(listaSugeridad[index]),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).popAndPushNamed('institution',
+                arguments: query = listaSugeridad[index]);
+            print(query);
+          },
         );
       },
     );
