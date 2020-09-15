@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/src/widget/cargarInstituciones_widget.dart';
 
 class DataSearch extends SearchDelegate {
   String seleccion = '';
@@ -59,7 +60,8 @@ class DataSearch extends SearchDelegate {
                   element.toLowerCase().startsWith(query.toLowerCase()),
             )
             .toList();
-    return ListView.builder(
+    return CargarInstituciones();
+    /* ListView.builder(
       itemCount: listaSugeridad.length,
       itemBuilder: (context, index) {
         return ListTile(
@@ -72,6 +74,6 @@ class DataSearch extends SearchDelegate {
           },
         );
       },
-    );
+    ); */
   }
 }

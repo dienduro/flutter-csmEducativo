@@ -11,12 +11,29 @@ class CargarInstituciones extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<List<InstitucionModel>> snapshot) {
         if (snapshot.hasData) {
-          return Container();
+          final institute = snapshot.data;
+          return ListView.builder(
+            itemCount: institute.length,
+            itemBuilder: (context, index) =>
+                _crearItem(context, institute[index]),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
+      },
+    );
+  }
+
+  Widget _crearItem(BuildContext context, InstitucionModel instituto) {
+    return ListTile(
+      title: Text('${instituto.nombre}'),
+      subtitle: Text('${instituto.id}'),
+      onTap: () {
+        Navigator.of(context)
+            .popAndPushNamed('institution', arguments: instituto.nombre);
+        print(instituto.nombre);
       },
     );
   }
