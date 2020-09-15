@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-/* import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
- */
+import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*  final institucionesProvider = new InstitucionesProvider();
+    final institucionesProvider = new InstitucionesProvider();
     institucionesProvider.getInstituciones();
- */
-    final _screenSize = MediaQuery.of(context).size;
+
+    /* final _screenSize = MediaQuery.of(context).size; */
     return Scaffold(
       body: Stack(
         children: [
