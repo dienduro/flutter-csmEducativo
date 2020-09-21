@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/src/widget/cargarInstituciones_widget.dart';
+import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
+import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+/* import 'package:flutter_csm_tecnologia/src/widget/cargarInstituciones_widget.dart';
+ */
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DataSearch extends SearchDelegate {
+  final institucionesProvider = new InstitucionesProvider();
   String seleccion = '';
   final instituciones = [
     'claretiano',
@@ -52,15 +57,50 @@ class DataSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    final listaSugeridad = (query.isEmpty)
+    /* final listaSugeridad = (query.isEmpty)
         ? institucionesRecien
         : instituciones
             .where(
               (element) =>
                   element.toLowerCase().startsWith(query.toLowerCase()),
             )
-            .toList();
-    return CargarInstituciones();
+            .toList(); */
+
+    if (query.isEmpty) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return FutureBuilder(
+      future: institucionesProvider.getInstituciones(),
+      builder: (context, AsyncSnapshot<List<InstitucionModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: Text(
+              'No data',
+            ),
+          );
+        }
+        final result = snapshot.data.where(
+          (element) => element.nombre.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        );
+
+        return ListView(
+          children: result
+              .map<ListTile>((e) => ListTile(
+                    leading: Icon(FontAwesomeIcons.school),
+                    title: Text(e.nombre),
+                    onTap: () {
+                      Navigator.of(context)
+                          .popAndPushNamed('institution', arguments: result);
+                    },
+                  ))
+              .toList(),
+        );
+      },
+    )
+
+        /* CargarInstituciones() */;
     /* ListView.builder(
       itemCount: listaSugeridad.length,
       itemBuilder: (context, index) {

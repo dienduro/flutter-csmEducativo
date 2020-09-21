@@ -4,6 +4,7 @@ import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart
 
 class CargarInstituciones extends StatelessWidget {
   final institucionesProvider = new InstitucionesProvider();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

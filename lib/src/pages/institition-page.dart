@@ -79,85 +79,103 @@ class InstPage extends StatelessWidget {
   Widget _crearTextField(BuildContext context) {
     final searchModalRoute = ModalRoute.of(context).settings.arguments;
     return Center(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Institución Educativa',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextField(
-              onTap: () {
-                showSearch(
-                  context: context,
-                  delegate: DataSearch(),
-                );
-              },
-              style: TextStyle(color: Colors.black),
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                errorText: null,
-                /*  errorText: snapshot.error, */
-                icon: Icon(
-                  FontAwesomeIcons.school,
-                  /* color: Colors.white, */
-                ),
-                filled: true,
-                fillColor: Colors.white38,
-                labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-                labelText: searchModalRoute,
-                hintStyle: TextStyle(color: Colors.black),
-                hintText: 'Institucion',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                /* counterText: snapshot.data, */
-                counterStyle:
-                    TextStyle(color: Theme.of(context).primaryColorDark),
+      child: Container(
+        width: 330.0,
+        height: 220.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          gradient: SweepGradient(
+            colors: [
+              Colors.white10,
+              Colors.black26,
+              Colors.white30,
+              Colors.black12,
+              Colors.white10,
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Institución Educativa',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            (searchModalRoute != null)
-                ? RaisedButton(
-                    color: Colors.teal,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                    shape: StadiumBorder(),
-                    elevation: 3.0,
-                    child: Text(
-                      'Ingresar',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    onPressed: () {},
-                    /* snapshot.hasData ? () => _login(context, bloc) : null */
-                  )
-                : /* RaisedButton(
-                    color: Colors.teal,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                    shape: StadiumBorder(),
-                    elevation: 3.0,
-                    child: Text(
-                      'Buscar',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    onPressed: null,
-                    /* snapshot.hasData ? () => _login(context, bloc) : null */
-                  ), */
-                SizedBox(
-                    height: 20.0,
+              Divider(),
+              SizedBox(
+                height: 10.0,
+              ),
+              TextField(
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: DataSearch(),
+                  );
+                },
+                style: TextStyle(color: Colors.black),
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  errorText: null,
+                  /*  errorText: snapshot.error, */
+                  icon: Icon(
+                    FontAwesomeIcons.school,
+                    size: 20.0,
+                    /* color: Colors.white, */
                   ),
-          ],
+                  filled: true,
+                  fillColor: Colors.white38,
+                  labelStyle: TextStyle(color: Colors.black, fontSize: 20),
+                  labelText: searchModalRoute,
+                  hintStyle: TextStyle(color: Colors.black),
+                  hintText: 'Institución',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  /* counterText: snapshot.data, */
+                  counterStyle:
+                      TextStyle(color: Theme.of(context).primaryColorDark),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              (searchModalRoute != null)
+                  ? RaisedButton(
+                      color: Colors.teal,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 85.0, vertical: 10.0),
+                      shape: StadiumBorder(),
+                      elevation: 3.0,
+                      child: Text(
+                        'Ingresar',
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                      onPressed: () {},
+                      /* snapshot.hasData ? () => _login(context, bloc) : null */
+                    )
+                  : /* RaisedButton(
+                      color: Colors.teal,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                      shape: StadiumBorder(),
+                      elevation: 3.0,
+                      child: Text(
+                        'Buscar',
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      onPressed: null,
+                      /* snapshot.hasData ? () => _login(context, bloc) : null */
+                    ), */
+                  SizedBox(
+                      height: 20.0,
+                    ),
+            ],
+          ),
         ),
       ),
     );
