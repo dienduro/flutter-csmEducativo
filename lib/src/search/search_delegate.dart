@@ -81,39 +81,30 @@ class DataSearch extends SearchDelegate {
         }
         final result = snapshot.data.where(
           (element) => element.nombre.toLowerCase().contains(
-                query.toLowerCase(),
+                query.toLowerCase().substring(0, query.length),
               ),
         );
+
+        final selectedInst = List;
+
+        /* print(query = result.toString()); */
 
         return ListView(
           children: result
               .map<ListTile>((e) => ListTile(
                     leading: Icon(FontAwesomeIcons.school),
                     title: Text(e.nombre),
+                    subtitle: Text(e.id),
                     onTap: () {
-                      Navigator.of(context)
-                          .popAndPushNamed('institution', arguments: result);
+                      Navigator.of(context).popAndPushNamed('institution',
+                          result: e.id, arguments: e.nombre);
                     },
                   ))
               .toList(),
         );
       },
-    )
+    );
 
-        /* CargarInstituciones() */;
-    /* ListView.builder(
-      itemCount: listaSugeridad.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: Icon(Icons.autorenew),
-          title: Text(listaSugeridad[index]),
-          onTap: () {
-            Navigator.of(context).popAndPushNamed('institution',
-                arguments: query = listaSugeridad[index]);
-            print(query);
-          },
-        );
-      },
-    ); */
+    /* CargarInstituciones() */
   }
 }

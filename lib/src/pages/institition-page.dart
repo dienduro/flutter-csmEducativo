@@ -5,9 +5,10 @@ import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InstPage extends StatelessWidget {
+  final institucionesProvider = new InstitucionesProvider();
+
   @override
   Widget build(BuildContext context) {
-    final institucionesProvider = new InstitucionesProvider();
     institucionesProvider.getInstituciones();
 
     /* final _screenSize = MediaQuery.of(context).size; */
@@ -111,8 +112,8 @@ class InstPage extends StatelessWidget {
                 height: 10.0,
               ),
               TextField(
-                onTap: () {
-                  showSearch(
+                onTap: () async {
+                  await showSearch(
                     context: context,
                     delegate: DataSearch(),
                   );
@@ -155,7 +156,9 @@ class InstPage extends StatelessWidget {
                         'Ingresar',
                         style: TextStyle(fontSize: 15.0),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        print(searchModalRoute);
+                      },
                       /* snapshot.hasData ? () => _login(context, bloc) : null */
                     )
                   : /* RaisedButton(
