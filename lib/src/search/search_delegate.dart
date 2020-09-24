@@ -5,8 +5,10 @@ import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart
  */
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DataSearch extends SearchDelegate {
+class DataSearch extends SearchDelegate<InstitucionModel> {
   final institucionesProvider = new InstitucionesProvider();
+  InstitucionModel institucionModel = new InstitucionModel();
+
   String seleccion = '';
   final instituciones = [
     'claretiano',
@@ -43,7 +45,7 @@ class DataSearch extends SearchDelegate {
         progress: transitionAnimation,
       ),
       onPressed: () {
-        close(context, query);
+        close(context, null);
       },
     );
   }
@@ -79,32 +81,62 @@ class DataSearch extends SearchDelegate {
             ),
           );
         }
-        final result = snapshot.data.where(
+        final instiList = snapshot.data;
+        final result = instiList.where(
           (element) => element.nombre.toLowerCase().contains(
                 query.toLowerCase().substring(0, query.length),
               ),
         );
 
-        final selectedInst = List;
-
         /* print(query = result.toString()); */
 
-        return ListView(
+        return ListView.builder(
+          itemCount: instiList.length.compareTo(0),
+          itemBuilder: (context, index) {
+            /* final snackBar = SnackBar(content: Text('sin datos')); */
+            final matchResult = result
+                .map(
+                  (e) => _listarResultado(context, e),
+                )
+                .toList();
+            if (matchResult.isEmpty) {
+              return Container();
+            }
+            /* print(matchResult[index]); */
+            return matchResult[index];
+          },
+        );
+
+        /* ListView(
           children: result
               .map<ListTile>((e) => ListTile(
                     leading: Icon(FontAwesomeIcons.school),
                     title: Text(e.nombre),
                     subtitle: Text(e.id),
                     onTap: () {
+                      prin
                       Navigator.of(context).popAndPushNamed('institution',
-                          result: e.id, arguments: e.nombre);
+                          result: e.id, arguments: e.id);
                     },
                   ))
               .toList(),
-        );
+        ); */
       },
     );
 
     /* CargarInstituciones() */
+  }
+
+  Widget _listarResultado(
+      BuildContext context, InstitucionModel resultInstitucion) {
+    return ListTile(
+      leading: Icon(FontAwesomeIcons.school),
+      title: Text('${resultInstitucion.nombre}'),
+      trailing: Text('${resultInstitucion.id}'),
+      onTap: () {
+        /* print(resultInstitucion); */
+        this.close(context, resultInstitucion);
+      },
+    );
   }
 }

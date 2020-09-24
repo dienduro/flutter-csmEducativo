@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
+
+import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
 import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
 
-import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+class InstPage extends StatefulWidget {
+  @override
+  _InstPageState createState() => _InstPageState();
+}
 
-class InstPage extends StatelessWidget {
+class _InstPageState extends State<InstPage> {
   final institucionesProvider = new InstitucionesProvider();
+  InstitucionModel selectedSchool;
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +120,23 @@ class InstPage extends StatelessWidget {
               ),
               TextField(
                 onTap: () async {
-                  await showSearch(
+                  final selectedInstitute = await showSearch(
                     context: context,
                     delegate: DataSearch(),
                   );
+
+                  if (selectedInstitute == null) {
+                    print('no se obtuvieron datos');
+                    return selectedInstitute;
+                  } else {
+                    selectedSchool = selectedInstitute;
+                    setState(() {});
+                    return selectedSchool;
+                  }
+
+                  /* print(selectedInstitute); */
+
+                  /* print('InstitutionPage: $selectedInstitute'); */
                 },
                 style: TextStyle(color: Colors.black),
                 cursorColor: Colors.black,
@@ -131,9 +151,11 @@ class InstPage extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.white38,
                   labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-                  labelText: searchModalRoute,
+                  labelText: (selectedSchool != null)
+                      ? selectedSchool.nombre
+                      : 'Institucion',
                   hintStyle: TextStyle(color: Colors.black),
-                  hintText: 'Institución',
+                  /* hintText: 'Institución', */
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
