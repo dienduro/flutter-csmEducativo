@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user_shcl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 
@@ -13,11 +14,27 @@ class InstPage extends StatefulWidget {
 class _InstPageState extends State<InstPage> {
   final institucionesProvider = new InstitucionesProvider();
   InstitucionModel selectedSchool;
+  TextEditingController _textController;
+  String _school = 'la normal';
+  final prefs = new PreferenciasUsuario();
+
+  @override
+  void initState() {
+    _textController = new TextEditingController(text: prefs.idSchool);
+    super.initState();
+
+    _textController.addListener(() {
+      _setSelectedInstituteTextField();
+    });
+  }
+
+  _setSelectedInstituteTextField() {
+    print('mostrar texto de institucion del llamado:$_school');
+    return _textController.text;
+  }
 
   @override
   Widget build(BuildContext context) {
-    institucionesProvider.getInstituciones();
-
     /* final _screenSize = MediaQuery.of(context).size; */
     return Scaffold(
       body: Stack(
@@ -85,7 +102,7 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _crearTextField(BuildContext context) {
-    final searchModalRoute = ModalRoute.of(context).settings.arguments;
+    /* final searchModalRoute = ModalRoute.of(context).settings.arguments; */
     return Center(
       child: Container(
         width: 330.0,
@@ -119,10 +136,12 @@ class _InstPageState extends State<InstPage> {
                 height: 10.0,
               ),
               TextField(
-                onTap: () async {
+                controller: _textController,
+                /*  onTap: () */ /* async {
                   final selectedInstitute = await showSearch(
                     context: context,
                     delegate: DataSearch(),
+                    query: _textController.text,
                   );
 
                   if (selectedInstitute == null) {
@@ -130,14 +149,43 @@ class _InstPageState extends State<InstPage> {
                     return selectedInstitute;
                   } else {
                     selectedSchool = selectedInstitute;
-                    setState(() {});
-                    return selectedSchool;
+
+                    setState(() {
+                      final _school = selectedSchool.nombre;
+
+                      /* print('regreseon el valor de _schoolset: $_school'); */
+
+                      return _school;
+                    });
                   }
+                }, */
+                onChanged: (setSchool) async {
+                  prefs.school = setSchool;
+                  final selectedInstitute = await showSearch(
+                    context: context,
+                    delegate: DataSearch(),
+                    query: _textController.text,
+                  );
 
-                  /* print(selectedInstitute); */
+                  if (selectedInstitute == null) {
+                    print('no se obtuvieron datos');
+                    return selectedInstitute;
+                  } else {
+                    setSchool = selectedInstitute.nombre;
 
-                  /* print('InstitutionPage: $selectedInstitute'); */
+                    /*  setState(() {
+                      /* print('regreseon el valor de _schoolset: $_school'); */
+                    }); */
+                  }
                 },
+                /* {
+                  prefs.school = setSchool;
+                  setSchool = selectedSchool.nombre;
+                  print('valor del setSchool$setSchool');
+                  setState(() {
+                    return setSchool = _school;
+                  });
+                }, */
                 style: TextStyle(color: Colors.black),
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
@@ -151,7 +199,13 @@ class _InstPageState extends State<InstPage> {
                   filled: true,
                   fillColor: Colors.white38,
                   labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-                  labelText: (selectedSchool != null)
+                  /* labelText:
+                      /* (selectedSchool != null)
+                      ? selectedSchool.nombre
+                      :  */
+                      'Institucion', */
+
+                  hintText: (selectedSchool != null)
                       ? selectedSchool.nombre
                       : 'Institucion',
                   hintStyle: TextStyle(color: Colors.black),
@@ -167,7 +221,7 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10,
               ),
-              (searchModalRoute != null)
+              (selectedSchool != null)
                   ? RaisedButton(
                       color: Colors.teal,
                       padding: EdgeInsets.symmetric(
@@ -179,7 +233,8 @@ class _InstPageState extends State<InstPage> {
                         style: TextStyle(fontSize: 15.0),
                       ),
                       onPressed: () {
-                        print(searchModalRoute);
+                        Navigator.pushNamed(context, 'login');
+                        /* print(searchModalRoute); */
                       },
                       /* snapshot.hasData ? () => _login(context, bloc) : null */
                     )

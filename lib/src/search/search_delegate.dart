@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/services/instititucion_service.dart';
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
 import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
 /* import 'package:flutter_csm_tecnologia/src/widget/cargarInstituciones_widget.dart';
@@ -7,7 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DataSearch extends SearchDelegate<InstitucionModel> {
   final institucionesProvider = new InstitucionesProvider();
-  InstitucionModel institucionModel = new InstitucionModel();
+
+  /* InstitucionModel institucionModel = new InstitucionModel(); */
 
   String seleccion = '';
   final instituciones = [
@@ -52,22 +54,27 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final schoolService = new InstituteServices();
     // TODO: implement buildResults
-    return Container();
+    return FutureBuilder(
+      future: schoolService.getSchoolByName(query),
+      builder: (_, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          //crar la lista
+
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+            ),
+          );
+        }
+      },
+    );
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    /* final listaSugeridad = (query.isEmpty)
-        ? institucionesRecien
-        : instituciones
-            .where(
-              (element) =>
-                  element.toLowerCase().startsWith(query.toLowerCase()),
-            )
-            .toList(); */
-
+  Widget buildSuggestions(BuildContext contex) {
     if (query.isEmpty) {
       return Center(child: CircularProgressIndicator());
     }
@@ -102,6 +109,7 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
             if (matchResult.isEmpty) {
               return Container();
             }
+
             /* print(matchResult[index]); */
             return matchResult[index];
           },
@@ -134,9 +142,14 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
       title: Text('${resultInstitucion.nombre}'),
       trailing: Text('${resultInstitucion.id}'),
       onTap: () {
+        query = resultInstitucion.nombre;
         /* print(resultInstitucion); */
-        this.close(context, resultInstitucion);
+        /* Navigator.of(context).popAndPushNamed('institution', arguments: query); */
+        /* this.close(context, resultInstitucion); */
+        return resultInstitucion;
       },
     );
   }
 }
+
+class Data {}
