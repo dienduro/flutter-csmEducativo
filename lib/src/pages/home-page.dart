@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -9,6 +10,7 @@ class HomePage extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         children: [
           _institutionPage(),
+          _loginPage(),
         ],
       ),
     );
@@ -16,6 +18,10 @@ class HomePage extends StatelessWidget {
 
   Widget _institutionPage() {
     return InstPage();
+  }
+
+  Widget _loginPage() {
+    return LoginPage();
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/pages/home-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
 import 'package:flutter_csm_tecnologia/theme/theme.dart';
 
 void main() => runApp(MyApp());
@@ -13,10 +14,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: miTema,
       title: 'Csm Educativo App',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         'home': (context) => HomePage(),
         'institution': (context) => InstPage(),
+        'login': (context) => LoginPage(),
       },
     );
   }
