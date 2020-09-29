@@ -167,7 +167,7 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10,
               ),
-              (searchModalRoute != null)
+              (selectedSchool != null)
                   ? RaisedButton(
                       color: Colors.teal,
                       padding: EdgeInsets.symmetric(

@@ -16,20 +16,49 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  Widget _crearImgFondo() {
+    return Container(
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image(
+            image: AssetImage('assets/drawable-fhd/login_background.png'),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _crearFondo(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
+
+    final _imgFondo = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: Container(
+            height: _size.height * 1,
+            width: _size.width * 1,
+            child: Image(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/drawable-fhd/login_background.png'),
+            ),
+          ),
+        )
+      ],
+    );
 
     final fondoRotate = Transform.rotate(
       angle: -pi / -20.0,
       child: Container(
-        height: 60.0,
+        height: 30.0,
         width: 240.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           gradient: LinearGradient(
             colors: <Color>[
-              Color.fromRGBO(63, 63, 156, 1.0),
-              Color.fromRGBO(90, 70, 200, 1.0),
+              Color.fromRGBO(24, 63, 64, 1.0),
+              Color.fromRGBO(76, 23, 43, 0.4),
             ],
           ),
         ),
@@ -61,26 +90,15 @@ class LoginPage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         /* fondoGradient, */
-        Positioned(
+        _imgFondo,
+        /* Positioned(
           right: -100.0,
           top: -140.0,
           height: 340,
           width: 520,
           child: fondoRotate,
-        ),
-        Positioned(
-          right: 100.0,
-          height: 30.0,
-          bottom: 120.0,
-          child: circulo,
-        ),
-        Positioned(
-          right: 200.0,
-          height: 30.0,
-          bottom: 60.0,
-          child: circulo,
-        ),
-        Positioned(
+        ), */
+        /* Positioned(
           left: -100.0,
           bottom: -10.0,
           height: 30.0,
@@ -108,27 +126,23 @@ class LoginPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 20.0,
+              height: 100.0,
             ),
-            Icon(
+            /*  Icon(
               Icons.person_pin,
               size: 100.0,
               color: Colors.white,
-            ),
+            ), */
             SizedBox(
               height: 20.0,
               width: double.infinity,
             ),
-            Text(
+            /* Text(
               'Bienvenido',
               style: TextStyle(color: Colors.white, fontSize: 40.0),
-            ),
-            SizedBox(
-              height: 100.0,
-              width: double.infinity,
-            ),
+            ), */
           ],
-        )
+        ) */
       ],
     );
   }
@@ -142,7 +156,7 @@ class LoginPage extends StatelessWidget {
           children: [
             SafeArea(
               child: SizedBox(
-                height: 150,
+                height: 60,
               ),
             ),
             _fondoForm(context),
@@ -177,35 +191,50 @@ class LoginPage extends StatelessWidget {
 
   Widget _fondoForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.85,
-      margin: EdgeInsets.symmetric(vertical: 30.0),
-      padding: EdgeInsets.symmetric(vertical: 50.0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(100, 10, 160, 0.6),
-            Color.fromRGBO(50, 20, 170, 0.6),
-          ],
+    return Stack(
+      children: [
+        Container(
+          height: size.height * 0.50,
+          width: size.width * 0.75,
+          margin: EdgeInsets.symmetric(vertical: 50.0),
+          padding: EdgeInsets.symmetric(vertical: 30.0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[
+                Color.fromRGBO(23, 43, 32, 0.6),
+                Color.fromRGBO(35, 123, 64, 0.6),
+              ],
+            ),
+            color: Color.fromRGBO(255, 255, 255, 0.8),
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: <BoxShadow>[
+              /* BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(-15.0, -20.0),
+                spreadRadius: 3.0,
+              ),
+              BoxShadow(
+                color: Colors.black45,
+                blurRadius: 20.0,
+                offset: Offset(0.0, 3.0),
+                spreadRadius: 3.0,
+              ), */
+            ],
+          ),
+          child: _contenidoIngreso(context),
         ),
-        color: Color.fromRGBO(255, 255, 255, 0.8),
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10.0,
-            offset: Offset(-15.0, -20.0),
-            spreadRadius: 3.0,
+        Positioned(
+          right: 103.0,
+          top: 1.0,
+          child: Icon(
+            Icons.person_pin,
+            size: 100.0,
+            color: Colors.white,
           ),
-          BoxShadow(
-            color: Colors.black45,
-            blurRadius: 20.0,
-            offset: Offset(0.0, 3.0),
-            spreadRadius: 3.0,
-          ),
-        ],
-      ),
-      child: _contenidoIngreso(context),
+        ),
+      ],
+      /*   child:  */
     );
   }
 
@@ -213,21 +242,21 @@ class LoginPage extends StatelessWidget {
     /* final bloc = Provider.of(context); */
     return Column(
       children: [
-        Text(
-          'Ingreso',
+        /* Text(
+          'Ingresar',
           style: TextStyle(
               color: Colors.white70,
               fontWeight: FontWeight.bold,
               fontSize: 20.0),
-        ),
+        ), */
         SizedBox(
-          height: 10.0,
+          height: 40.0,
         ),
         _crearEmail(context),
         /* _crearEmail(bloc), */
 
         SizedBox(
-          height: 50.0,
+          height: 20.0,
         ),
         /* _crearPassword(bloc), */
         _crearPassword(context),
