@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: miTema,
       title: 'Csm Educativo App',
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'home': (context) => HomePage(),
         'institution': (context) => InstPage(),

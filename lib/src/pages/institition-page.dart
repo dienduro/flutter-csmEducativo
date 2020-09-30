@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/src/providers/institucion_to_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
-import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+import 'package:provider/provider.dart';
 
 class InstPage extends StatefulWidget {
   @override
@@ -11,19 +12,19 @@ class InstPage extends StatefulWidget {
 }
 
 class _InstPageState extends State<InstPage> {
-  final institucionesProvider = new InstitucionesProvider();
+  /* final institucionesProvider = new InstitucionesProvider(); */
+  /*  School selectedSchool; */
   InstitucionModel selectedSchool;
-
   @override
   Widget build(BuildContext context) {
-    institucionesProvider.getInstituciones();
+    /* institucionesProvider.getInstituciones(); */
 
     /* final _screenSize = MediaQuery.of(context).size; */
     return Scaffold(
       body: Stack(
         children: [
           _crearFondo(context),
-          _crearTextField(context),
+          _crearFondoForm(context),
         ],
       ),
     );
@@ -84,8 +85,9 @@ class _InstPageState extends State<InstPage> {
     );
   }
 
-  Widget _crearTextField(BuildContext context) {
-    final searchModalRoute = ModalRoute.of(context).settings.arguments;
+  Widget _crearFondoForm(BuildContext context) {
+    /* final searchModalRoute = ModalRoute.of(context).settings.arguments; */
+
     return Center(
       child: Container(
         width: 330.0,
@@ -168,41 +170,34 @@ class _InstPageState extends State<InstPage> {
                 height: 10,
               ),
               (selectedSchool != null)
-                  ? RaisedButton(
-                      color: Colors.teal,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 85.0, vertical: 10.0),
-                      shape: StadiumBorder(),
-                      elevation: 3.0,
-                      child: Text(
-                        'Ingresar',
-                        style: TextStyle(fontSize: 15.0),
-                      ),
-                      onPressed: () {
-                        print(searchModalRoute);
-                      },
-                      /* snapshot.hasData ? () => _login(context, bloc) : null */
-                    )
-                  : /* RaisedButton(
-                      color: Colors.teal,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                      shape: StadiumBorder(),
-                      elevation: 3.0,
-                      child: Text(
-                        'Buscar',
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                      onPressed: null,
-                      /* snapshot.hasData ? () => _login(context, bloc) : null */
-                    ), */
-                  SizedBox(
+                  ? _botonAcceso(context)
+                  : SizedBox(
                       height: 20.0,
                     ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _botonAcceso(BuildContext context) {
+    final navegacionModel = Provider.of<NavegacionModel>(context);
+    return RaisedButton(
+      color: Colors.teal,
+      padding: EdgeInsets.symmetric(horizontal: 85.0, vertical: 10.0),
+      shape: StadiumBorder(),
+      elevation: 3.0,
+      child: Text(
+        'Ingresar',
+        style: TextStyle(fontSize: 15.0),
+      ),
+      onPressed: () {
+        navegacionModel.paginaActual = 1;
+        /* Navigator.of(context)
+            .pushReplacementNamed('login', arguments: selectedSchool); */
+      },
+      /* snapshot.hasData ? () => _login(context, bloc) : null */
     );
   }
 }
