@@ -43,5 +43,3 @@ class _Paginas extends StatelessWidget {
     return LoginPage();
   }
 }
-
-/* class _NavegacionModel with ChangeNotifier {} */

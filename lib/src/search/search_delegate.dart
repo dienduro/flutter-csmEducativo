@@ -59,14 +59,6 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    /* final listaSugeridad = (query.isEmpty)
-        ? institucionesRecien
-        : instituciones
-            .where(
-              (element) =>
-                  element.toLowerCase().startsWith(query.toLowerCase()),
-            )
-            .toList(); */
 
     if (query.isEmpty) {
       return Center(child: CircularProgressIndicator());
@@ -123,8 +115,6 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
         ); */
       },
     );
-
-    /* CargarInstituciones() */
   }
 
   Widget _listarResultado(

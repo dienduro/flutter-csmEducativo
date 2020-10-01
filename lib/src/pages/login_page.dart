@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -11,19 +10,6 @@ class LoginPage extends StatelessWidget {
         children: <Widget>[
           _crearFondo(context),
           _loginForm(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _crearImgFondo() {
-    return Container(
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image(
-            image: AssetImage('assets/drawable-fhd/login_background.png'),
-          )
         ],
       ),
     );
@@ -48,101 +34,9 @@ class LoginPage extends StatelessWidget {
       ],
     );
 
-    final fondoRotate = Transform.rotate(
-      angle: -pi / -20.0,
-      child: Container(
-        height: 30.0,
-        width: 240.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color.fromRGBO(24, 63, 64, 1.0),
-              Color.fromRGBO(76, 23, 43, 0.4),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    /* final fondoGradient = Container(
-      height: size.height * 0.4,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(63, 63, 156, 1.0),
-            Color.fromRGBO(90, 70, 200, 1.0),
-          ],
-        ),
-      ),
-    ); */
-
-    final circulo = Container(
-      width: 150.0,
-      height: 150.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.0),
-        color: Colors.white12,
-      ),
-    );
-
     return Stack(
       children: <Widget>[
-        /* fondoGradient, */
         _imgFondo,
-        /* Positioned(
-          right: -100.0,
-          top: -140.0,
-          height: 340,
-          width: 520,
-          child: fondoRotate,
-        ), */
-        /* Positioned(
-          left: -100.0,
-          bottom: -10.0,
-          height: 30.0,
-          child: circulo,
-        ),
-        Positioned(
-          right: -10.0,
-          top: 100.0,
-          height: 30.0,
-          child: circulo,
-        ),
-        Positioned(
-          right: -40.0,
-          top: 40.0,
-          height: 30.0,
-          child: circulo,
-        ),
-        Positioned(
-          right: -90.0,
-          top: 200.0,
-          height: 30.0,
-          child: circulo,
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 100.0,
-            ),
-            /*  Icon(
-              Icons.person_pin,
-              size: 100.0,
-              color: Colors.white,
-            ), */
-            SizedBox(
-              height: 20.0,
-              width: double.infinity,
-            ),
-            /* Text(
-              'Bienvenido',
-              style: TextStyle(color: Colors.white, fontSize: 40.0),
-            ), */
-          ],
-        ) */
       ],
     );
   }
@@ -180,9 +74,6 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            /* SizedBox(
-              height: 100.0,
-            ), */
           ],
         ),
       ),
@@ -207,20 +98,7 @@ class LoginPage extends StatelessWidget {
             ),
             color: Color.fromRGBO(255, 255, 255, 0.8),
             borderRadius: BorderRadius.circular(10.0),
-            boxShadow: <BoxShadow>[
-              /* BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                offset: Offset(-15.0, -20.0),
-                spreadRadius: 3.0,
-              ),
-              BoxShadow(
-                color: Colors.black45,
-                blurRadius: 20.0,
-                offset: Offset(0.0, 3.0),
-                spreadRadius: 3.0,
-              ), */
-            ],
+            boxShadow: <BoxShadow>[],
           ),
           child: _contenidoIngreso(context),
         ),
@@ -234,7 +112,6 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ],
-      /*   child:  */
     );
   }
 
@@ -242,28 +119,17 @@ class LoginPage extends StatelessWidget {
     /* final bloc = Provider.of(context); */
     return Column(
       children: [
-        /* Text(
-          'Ingresar',
-          style: TextStyle(
-              color: Colors.white70,
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0),
-        ), */
         SizedBox(
           height: 40.0,
         ),
         _crearEmail(context),
-        /* _crearEmail(bloc), */
-
         SizedBox(
           height: 20.0,
         ),
-        /* _crearPassword(bloc), */
         _crearPassword(context),
         SizedBox(
           height: 30.0,
         ),
-        /* _crearBoton(bloc), */
         RaisedButton(
           color: Colors.white54,
           padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
@@ -286,7 +152,6 @@ class LoginPage extends StatelessWidget {
         style: TextStyle(color: Colors.white),
         cursorColor: Colors.white24,
         decoration: InputDecoration(
-          /*   errorText: snapshot.error ,*/
           icon: Icon(
             Icons.alternate_email,
             color: Colors.white,
@@ -300,12 +165,10 @@ class LoginPage extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          /*  counterText: snapshot.data, */
           counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
         ),
         keyboardType: TextInputType.emailAddress,
         onChanged: (value) {},
-        /* (value) => bloc.changeEmail(value), */
       ),
     );
   }
@@ -331,12 +194,9 @@ class LoginPage extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          /*  counterText: snapshot.data, */
           counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
         ),
         keyboardType: TextInputType.visiblePassword,
-        /* onChanged: (value) => bloc.changePassword(value), */
-
         onChanged: (value) {},
       ),
     );

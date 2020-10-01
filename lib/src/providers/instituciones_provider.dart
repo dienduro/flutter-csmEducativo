@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
 
 class InstitucionesProvider {
-  final String _url = '82134930c7cc.ngrok.io';
+  final String _url = '6596f56b2c9d.ngrok.io';
 
   Future<List<InstitucionModel>> getInstituciones() async {
     final url = Uri.http(_url, "api/institutes");

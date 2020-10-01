@@ -120,6 +120,9 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10.0,
               ),
+              /* TODO: del textfiel ponerlo o dibujar el texto en su textController
+               que me escuche los cambios de la busqueda de la clase DataSearch
+               y dibjarlo en el textfield */
               TextField(
                 onTap: () async {
                   final selectedInstitute = await showSearch(
@@ -193,6 +196,7 @@ class _InstPageState extends State<InstPage> {
         style: TextStyle(fontSize: 15.0),
       ),
       onPressed: () {
+        /* TODO: Navegar a la siguiente pantalla llevando la informacion del selectedSchool */
         navegacionModel.paginaActual = 1;
         /* Navigator.of(context)
             .pushReplacementNamed('login', arguments: selectedSchool); */
