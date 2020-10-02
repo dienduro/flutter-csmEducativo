@@ -109,6 +109,7 @@ class _InstPageState extends State<InstPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              _searchSchool(),
               Text(
                 'Institución Educativa',
                 style: TextStyle(
@@ -121,54 +122,9 @@ class _InstPageState extends State<InstPage> {
                 height: 10.0,
               ),
               /* TODO: del textfiel ponerlo o dibujar el texto en su textController
-               que me escuche los cambios de la busqueda de la clase DataSearch
+              que me escuche los cambios de la busqueda de la clase DataSearch
                y dibjarlo en el textfield */
-              TextField(
-                onTap: () async {
-                  final selectedInstitute = await showSearch(
-                    context: context,
-                    delegate: DataSearch(),
-                  );
 
-                  if (selectedInstitute == null) {
-                    print('no se obtuvieron datos');
-                    return selectedInstitute;
-                  } else {
-                    selectedSchool = selectedInstitute;
-                    setState(() {});
-                    return selectedSchool;
-                  }
-
-                  /* print(selectedInstitute); */
-
-                  /* print('InstitutionPage: $selectedInstitute'); */
-                },
-                style: TextStyle(color: Colors.black),
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  errorText: null,
-                  /*  errorText: snapshot.error, */
-                  icon: Icon(
-                    FontAwesomeIcons.school,
-                    size: 20.0,
-                    /* color: Colors.white, */
-                  ),
-                  filled: true,
-                  fillColor: Colors.white38,
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-                  labelText: (selectedSchool != null)
-                      ? selectedSchool.nombre
-                      : 'Institucion',
-                  hintStyle: TextStyle(color: Colors.black),
-                  /* hintText: 'Institución', */
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  /* counterText: snapshot.data, */
-                  counterStyle:
-                      TextStyle(color: Theme.of(context).primaryColorDark),
-                ),
-              ),
               SizedBox(
                 height: 10,
               ),
@@ -180,6 +136,53 @@ class _InstPageState extends State<InstPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _searchSchool() {
+    return TextField(
+      onTap: () async {
+        final selectedInstitute = await showSearch(
+          context: context,
+          delegate: DataSearch(),
+        );
+
+        if (selectedInstitute == null) {
+          print('no se obtuvieron datos');
+          return selectedInstitute;
+        } else {
+          selectedSchool = selectedInstitute;
+          setState(() {});
+          return selectedSchool;
+        }
+
+        /* print(selectedInstitute); */
+
+        /* print('InstitutionPage: $selectedInstitute'); */
+      },
+      style: TextStyle(color: Colors.black),
+      cursorColor: Colors.black,
+      decoration: InputDecoration(
+        errorText: null,
+        /*  errorText: snapshot.error, */
+        icon: Icon(
+          FontAwesomeIcons.school,
+          size: 20.0,
+          /* color: Colors.white, */
+        ),
+        filled: true,
+        fillColor: Colors.white38,
+        labelStyle: TextStyle(color: Colors.black, fontSize: 20),
+        labelText:
+            (selectedSchool != null) ? selectedSchool.nombre : 'Institucion',
+        hintStyle: TextStyle(color: Colors.black),
+        /* hintText: 'Institución', */
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        /* counterText: snapshot.data, */
+        counterStyle: TextStyle(color: Theme.of(context).primaryColorDark),
       ),
     );
   }

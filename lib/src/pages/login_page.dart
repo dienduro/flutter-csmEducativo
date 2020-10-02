@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    /* SystemChrome.setPreferredOrientations(DeviceOrientation.values); */
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -58,7 +60,8 @@ class LoginPage extends StatelessWidget {
                   FlatButton(
                     onPressed: () {},
                     child: Text(
-                      'Olvido su coontraseña',
+                      'Olvidó su contraseña',
+                      style: TextStyle(color: Colors.white54),
                       overflow: TextOverflow.clip,
                     ),
                   ),
@@ -73,12 +76,15 @@ class LoginPage extends StatelessWidget {
 
   Widget _fondoForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
     return Stack(
       children: [
         SingleChildScrollView(
           child: Container(
-            height: size.height * 0.52,
-            width: size.width * 0.75,
+            height: orientation == Orientation.portrait
+                ? size.height * 0.5
+                : size.height * 0.8,
+            width: size.width * 0.78,
             margin: EdgeInsets.symmetric(vertical: 50.0),
             padding: EdgeInsets.symmetric(vertical: 30.0),
             decoration: BoxDecoration(
@@ -96,7 +102,9 @@ class LoginPage extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 103.0,
+          right: orientation == Orientation.portrait
+              ? size.width * 0.27
+              : size.width * 0.32,
           top: 1.0,
           child: Icon(
             Icons.person_pin,
@@ -116,7 +124,7 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           height: 40.0,
         ),
-        _crearEmail(bloc),
+        _crearUsuario(bloc),
         SizedBox(
           height: 20.0,
         ),
@@ -130,9 +138,9 @@ class LoginPage extends StatelessWidget {
   }
 
 /* recordar exportar las propiedades en login_provider par que me pueda leer en la instancia */
-  Widget _crearEmail(LoginBloc bloc) {
+  Widget _crearUsuario(LoginBloc bloc) {
     return StreamBuilder(
-      stream: bloc.emailStream,
+      stream: bloc.userStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -147,10 +155,10 @@ class LoginPage extends StatelessWidget {
               filled: true,
               fillColor: Colors.black12,
               labelStyle: TextStyle(color: Colors.white),
-              labelText: 'Email:',
+              labelText: 'Username:',
               hintStyle: TextStyle(color: Colors.white),
               errorText: snapshot.error,
-              hintText: 'example@email.com',
+              hintText: 'nombre de usuario',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -158,7 +166,7 @@ class LoginPage extends StatelessWidget {
                   TextStyle(color: Theme.of(context).primaryColorLight),
             ),
             keyboardType: TextInputType.emailAddress,
-            onChanged: bloc.changeEmail,
+            onChanged: bloc.changeUser,
           ),
         );
       },
@@ -225,7 +233,8 @@ class LoginPage extends StatelessWidget {
                       'Ingresar',
                       style: TextStyle(fontSize: 20.0, color: Colors.white60),
                     ),
-                    onPressed: () {},)
+                    onPressed: () {},
+                  )
                 : Container());
       },
     );
