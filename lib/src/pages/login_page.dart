@@ -87,7 +87,7 @@ class LoginPage extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: size.height * 0.50,
+          height: size.height * 0.60,
           width: size.width * 0.75,
           margin: EdgeInsets.symmetric(vertical: 50.0),
           padding: EdgeInsets.symmetric(vertical: 30.0),
@@ -133,17 +133,7 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           height: 30.0,
         ),
-        RaisedButton(
-          color: Colors.white54,
-          padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-          shape: StadiumBorder(),
-          elevation: 40.0,
-          child: Text(
-            'Ingresar',
-            style: TextStyle(fontSize: 20.0),
-          ),
-          onPressed: () {},
-        ),
+        _crearboton(),
       ],
     );
   }
@@ -168,6 +158,7 @@ class LoginPage extends StatelessWidget {
               labelStyle: TextStyle(color: Colors.white),
               labelText: 'Email:',
               hintStyle: TextStyle(color: Colors.white),
+              errorText: snapshot.error,
               hintText: 'example@email.com',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -206,6 +197,7 @@ class LoginPage extends StatelessWidget {
               labelStyle: TextStyle(color: Colors.white),
               labelText: 'Password:',
               hintStyle: TextStyle(color: Colors.white),
+              errorText: snapshot.error,
               counterText: snapshot.data,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -218,6 +210,27 @@ class LoginPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _crearboton() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          gradient: LinearGradient(colors: [
+            Color.fromARGB(40, 90, 175, 120),
+            Color.fromARGB(120, 47, 188, 145),
+          ])),
+      child: FlatButton(
+        /*  color: Colors.white54, */
+        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+        shape: StadiumBorder(),
+        child: Text(
+          'Ingresar',
+          style: TextStyle(fontSize: 20.0, color: Colors.white60),
+        ),
+        onPressed: () {},
+      ),
     );
   }
 }
