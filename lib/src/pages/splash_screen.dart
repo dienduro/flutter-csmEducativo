@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/src/pages/home-page.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget /* StatelessWidget */ {
   const SplashScreen({Key key}) : super(key: key);
 
   @override

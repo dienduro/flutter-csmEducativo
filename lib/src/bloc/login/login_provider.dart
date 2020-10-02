@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
-export 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
+/* export 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart'; */
 
 class LoginProvider with ChangeNotifier {
   LoginBloc _loginBloc;
@@ -13,3 +13,4 @@ class LoginProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+ */

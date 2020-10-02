@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
@@ -32,8 +33,8 @@ class _Paginas extends StatelessWidget {
         _institutionPage(),
         _loginPage(),
       ],
-      /* ), */
     );
+    /* ); */
   }
 
   Widget _institutionPage() {

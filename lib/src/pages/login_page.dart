@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -119,17 +119,17 @@ class LoginPage extends StatelessWidget {
 
   Widget _contenidoIngreso(BuildContext context) {
     /* instanciar el Provider de tipo loginbloc */
-    final bloc = Provider.of(context);
+    final bloc = LoginInherited.of(context);
     return Column(
       children: [
         SizedBox(
           height: 40.0,
         ),
-        _crearEmail(context, bloc),
+        _crearEmail(bloc),
         SizedBox(
           height: 20.0,
         ),
-        _crearPassword(context, bloc),
+        _crearPassword(bloc),
         SizedBox(
           height: 30.0,
         ),
@@ -149,61 +149,75 @@ class LoginPage extends StatelessWidget {
   }
 
 /* recordar exportar las propiedades en login_provider par que me pueda leer en la instancia */
-  Widget _crearEmail(BuildContext context, LoginBloc bloc) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      child: TextField(
-        style: TextStyle(color: Colors.white),
-        cursorColor: Colors.white24,
-        decoration: InputDecoration(
-          icon: Icon(
-            Icons.alternate_email,
-            color: Colors.white,
+  Widget _crearEmail(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: TextField(
+            style: TextStyle(color: Colors.white),
+            cursorColor: Colors.white24,
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.alternate_email,
+                color: Colors.white,
+              ),
+              filled: true,
+              fillColor: Colors.black12,
+              labelStyle: TextStyle(color: Colors.white),
+              labelText: 'Email:',
+              hintStyle: TextStyle(color: Colors.white),
+              hintText: 'example@email.com',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              counterStyle:
+                  TextStyle(color: Theme.of(context).primaryColorLight),
+            ),
+            keyboardType: TextInputType.emailAddress,
+            onChanged: bloc.changeEmail,
           ),
-          filled: true,
-          fillColor: Colors.black12,
-          labelStyle: TextStyle(color: Colors.white),
-          labelText: 'Email:',
-          hintStyle: TextStyle(color: Colors.white),
-          hintText: 'example@email.com',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
-        ),
-        keyboardType: TextInputType.emailAddress,
-        onChanged: (value) {},
-      ),
+        );
+      },
     );
   }
 
-  Widget _crearPassword(BuildContext context, LoginBloc bloc) {
+  Widget _crearPassword(LoginBloc bloc) {
     /* implementar el StremBuilder en donde voy escuchar y dibujar lo que tengo del textfield */
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      child: TextField(
-        obscureText: true,
-        style: TextStyle(color: Colors.white),
-        cursorColor: Colors.white24,
-        decoration: InputDecoration(
-          /* errorText: snapshot.error, */
-          icon: Icon(
-            Icons.lock,
-            color: Colors.white,
+
+    return StreamBuilder(
+      stream: bloc.paswordStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(color: Colors.white),
+            cursorColor: Colors.white24,
+            decoration: InputDecoration(
+              /* errorText: snapshot.error, */
+              icon: Icon(
+                Icons.lock,
+                color: Colors.white,
+              ),
+              filled: true,
+              fillColor: Colors.black12,
+              labelStyle: TextStyle(color: Colors.white),
+              labelText: 'Password:',
+              hintStyle: TextStyle(color: Colors.white),
+              counterText: snapshot.data,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              counterStyle:
+                  TextStyle(color: Theme.of(context).primaryColorLight),
+            ),
+            keyboardType: TextInputType.visiblePassword,
+            onChanged: bloc.changePass,
           ),
-          filled: true,
-          fillColor: Colors.black12,
-          labelStyle: TextStyle(color: Colors.white),
-          labelText: 'Password:',
-          hintStyle: TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
-        ),
-        keyboardType: TextInputType.visiblePassword,
-        onChanged: (value) {},
-      ),
+        );
+      },
     );
   }
 }

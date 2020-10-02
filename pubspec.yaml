@@ -31,6 +31,7 @@ dependencies:
   http: ^0.12.2
   provider: ^4.3.2+2
   shared_preferences: ^0.5.10
+  rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:
