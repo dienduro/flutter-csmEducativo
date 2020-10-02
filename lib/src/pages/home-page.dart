@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
 import 'package:flutter_csm_tecnologia/src/providers/institucion_to_login.dart';
@@ -12,11 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => new NavegacionModel(),
-      child: Scaffold(
-        body: _Paginas(),
-      ),
+    return Scaffold(
+      body: _Paginas(),
     );
   }
 }
@@ -25,13 +23,16 @@ class _Paginas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navegacionModel = Provider.of<NavegacionModel>(context);
-    return PageView(
+    return /* LoginInherited(
+      child: */
+        PageView(
       controller: navegacionModel.pageController,
       physics: NeverScrollableScrollPhysics(),
       children: [
         _institutionPage(),
         _loginPage(),
       ],
+      /* ), */
     );
   }
 

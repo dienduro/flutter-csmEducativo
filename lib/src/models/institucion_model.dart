@@ -30,7 +30,7 @@ String institucionesToJson(List<Instituciones> data) =>
 
 class InstitucionModel {
   InstitucionModel({
-    this.id,
+    this.id = '',
     this.nombre = '',
   });
 

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -116,17 +118,18 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _contenidoIngreso(BuildContext context) {
-    /* final bloc = Provider.of(context); */
+    /* instanciar el Provider de tipo loginbloc */
+    final bloc = Provider.of(context);
     return Column(
       children: [
         SizedBox(
           height: 40.0,
         ),
-        _crearEmail(context),
+        _crearEmail(context, bloc),
         SizedBox(
           height: 20.0,
         ),
-        _crearPassword(context),
+        _crearPassword(context, bloc),
         SizedBox(
           height: 30.0,
         ),
@@ -145,7 +148,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _crearEmail(BuildContext context) {
+/* recordar exportar las propiedades en login_provider par que me pueda leer en la instancia */
+  Widget _crearEmail(BuildContext context, LoginBloc bloc) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: TextField(
@@ -173,7 +177,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _crearPassword(BuildContext context) {
+  Widget _crearPassword(BuildContext context, LoginBloc bloc) {
+    /* implementar el StremBuilder en donde voy escuchar y dibujar lo que tengo del textfield */
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: TextField(
