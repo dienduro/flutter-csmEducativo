@@ -44,39 +44,28 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _loginForm(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SafeArea(
-              child: SizedBox(
-                height: 60,
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _fondoForm(context),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Olvido su coontraseña',
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            _fondoForm(context),
-            Row(
-              children: [
-                FlatButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, 'registro');
-                  },
-                  child: Text(
-                    'crear una nueva cuenta',
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Olvido su coontraseña',
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -86,23 +75,25 @@ class LoginPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Container(
-          height: size.height * 0.60,
-          width: size.width * 0.75,
-          margin: EdgeInsets.symmetric(vertical: 50.0),
-          padding: EdgeInsets.symmetric(vertical: 30.0),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[
-                Color.fromRGBO(23, 43, 32, 0.6),
-                Color.fromRGBO(35, 123, 64, 0.6),
-              ],
+        SingleChildScrollView(
+          child: Container(
+            height: size.height * 0.52,
+            width: size.width * 0.75,
+            margin: EdgeInsets.symmetric(vertical: 50.0),
+            padding: EdgeInsets.symmetric(vertical: 30.0),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color.fromRGBO(23, 43, 32, 0.6),
+                  Color.fromRGBO(35, 123, 64, 0.6),
+                ],
+              ),
+              color: Color.fromRGBO(255, 255, 255, 0.8),
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: <BoxShadow>[],
             ),
-            color: Color.fromRGBO(255, 255, 255, 0.8),
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: <BoxShadow>[],
+            child: _contenidoIngreso(context),
           ),
-          child: _contenidoIngreso(context),
         ),
         Positioned(
           right: 103.0,
@@ -110,7 +101,7 @@ class LoginPage extends StatelessWidget {
           child: Icon(
             Icons.person_pin,
             size: 100.0,
-            color: Colors.white,
+            color: Color.fromARGB(220, 200, 200, 200),
           ),
         ),
       ],
@@ -131,9 +122,9 @@ class LoginPage extends StatelessWidget {
         ),
         _crearPassword(bloc),
         SizedBox(
-          height: 30.0,
+          height: 20.0,
         ),
-        _crearboton(),
+        _crearboton(bloc),
       ],
     );
   }
@@ -198,7 +189,7 @@ class LoginPage extends StatelessWidget {
               labelText: 'Password:',
               hintStyle: TextStyle(color: Colors.white),
               errorText: snapshot.error,
-              counterText: snapshot.data,
+              /* counterText: snapshot.data, */
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -213,24 +204,30 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _crearboton() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          gradient: LinearGradient(colors: [
-            Color.fromARGB(40, 90, 175, 120),
-            Color.fromARGB(120, 47, 188, 145),
-          ])),
-      child: FlatButton(
-        /*  color: Colors.white54, */
-        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-        shape: StadiumBorder(),
-        child: Text(
-          'Ingresar',
-          style: TextStyle(fontSize: 20.0, color: Colors.white60),
-        ),
-        onPressed: () {},
-      ),
+  Widget _crearboton(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.loginValidStreamRx,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                gradient: LinearGradient(colors: [
+                  Color.fromARGB(40, 90, 175, 120),
+                  Color.fromARGB(120, 47, 188, 145),
+                ])),
+            child: (snapshot.hasData)
+                ? FlatButton(
+                    /*  color: Colors.white54, */
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                    shape: StadiumBorder(),
+                    child: Text(
+                      'Ingresar',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white60),
+                    ),
+                    onPressed: () {},)
+                : Container());
+      },
     );
   }
 }
