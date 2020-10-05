@@ -217,30 +217,35 @@ class LoginPage extends StatelessWidget {
       stream: bloc.loginValidStreamRx,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(40, 90, 175, 120),
-                  Color.fromARGB(120, 47, 188, 145),
-                ])),
-            child: (snapshot.hasData)
-                ? FlatButton(
-                    /*  color: Colors.white54, */
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                    shape: StadiumBorder(),
-                    child: Text(
-                      'Ingresar',
-                      style: TextStyle(fontSize: 20.0, color: Colors.white60),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed(
-                        'notes',
-                      );
-                    },
-                  )
-                : Container());
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(40, 90, 175, 120),
+                Color.fromARGB(120, 47, 188, 145),
+              ])),
+          child: (snapshot.hasData)
+              ? FlatButton(
+                  /*  color: Colors.white54, */
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                  shape: StadiumBorder(),
+                  child: Text(
+                    'Ingresar',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white60),
+                  ),
+                  onPressed:
+                      snapshot.hasData ? () => _login(bloc, context) : null)
+              : Container(),
+        );
       },
     );
+  }
+
+  _login(LoginBloc bloc, BuildContext context) {
+    print('================');
+    print('User: ${bloc.lastUser}');
+    print('Password: ${bloc.lastPsswrd}');
+    print('================');
+    Navigator.of(context).pushReplacementNamed('notes');
   }
 }
