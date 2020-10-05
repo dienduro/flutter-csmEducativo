@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/src/providers/institucion_to_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
-import 'package:provider/provider.dart';
 
 class InstPage extends StatefulWidget {
   @override
@@ -20,6 +18,7 @@ class _InstPageState extends State<InstPage> {
     /* institucionesProvider.getInstituciones(); */
 
     /* final _screenSize = MediaQuery.of(context).size; */
+
     return Scaffold(
       body: Stack(
         children: [
@@ -109,7 +108,6 @@ class _InstPageState extends State<InstPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _searchSchool(),
               Text(
                 'Institución Educativa',
                 style: TextStyle(
@@ -121,6 +119,7 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10.0,
               ),
+              _searchSchool(),
               /* TODO: del textfiel ponerlo o dibujar el texto en su textController
               que me escuche los cambios de la busqueda de la clase DataSearch
                y dibjarlo en el textfield */
@@ -141,54 +140,60 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _searchSchool() {
-    return TextField(
-      onTap: () async {
-        final selectedInstitute = await showSearch(
-          context: context,
-          delegate: DataSearch(),
-        );
+    /* TODO: Crear Bloc de Stream para el seach School */
+    return StreamBuilder<Object>(
+        stream: null,
+        builder: (context, snapshot) {
+          return TextField(
+            onTap: () async {
+              final selectedInstitute = await showSearch(
+                context: context,
+                delegate: DataSearch(),
+              );
 
-        if (selectedInstitute == null) {
-          print('no se obtuvieron datos');
-          return selectedInstitute;
-        } else {
-          selectedSchool = selectedInstitute;
-          setState(() {});
-          return selectedSchool;
-        }
+              if (selectedInstitute == null) {
+                print('no se obtuvieron datos');
+                return selectedInstitute;
+              } else {
+                selectedSchool = selectedInstitute;
+                setState(() {});
+                return selectedSchool;
+              }
 
-        /* print(selectedInstitute); */
+              /* print(selectedInstitute); */
 
-        /* print('InstitutionPage: $selectedInstitute'); */
-      },
-      style: TextStyle(color: Colors.black),
-      cursorColor: Colors.black,
-      decoration: InputDecoration(
-        errorText: null,
-        /*  errorText: snapshot.error, */
-        icon: Icon(
-          FontAwesomeIcons.school,
-          size: 20.0,
-          /* color: Colors.white, */
-        ),
-        filled: true,
-        fillColor: Colors.white38,
-        labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-        labelText:
-            (selectedSchool != null) ? selectedSchool.nombre : 'Institucion',
-        hintStyle: TextStyle(color: Colors.black),
-        /* hintText: 'Institución', */
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        /* counterText: snapshot.data, */
-        counterStyle: TextStyle(color: Theme.of(context).primaryColorDark),
-      ),
-    );
+              /* print('InstitutionPage: $selectedInstitute'); */
+            },
+            style: TextStyle(color: Colors.black),
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              errorText: null,
+              /*  errorText: snapshot.error, */
+              icon: Icon(
+                FontAwesomeIcons.school,
+                size: 20.0,
+                /* color: Colors.white, */
+              ),
+              filled: true,
+              fillColor: Colors.white38,
+              labelStyle: TextStyle(color: Colors.black, fontSize: 20),
+              labelText: (selectedSchool != null)
+                  ? selectedSchool.nombre
+                  : 'Institucion',
+              hintStyle: TextStyle(color: Colors.black),
+              /* hintText: 'Institución', */
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              /* counterText: snapshot.data, */
+              counterStyle:
+                  TextStyle(color: Theme.of(context).primaryColorDark),
+            ),
+          );
+        });
   }
 
   Widget _botonAcceso(BuildContext context) {
-    final navegacionModel = Provider.of<NavegacionModel>(context);
     return RaisedButton(
       color: Colors.teal,
       padding: EdgeInsets.symmetric(horizontal: 85.0, vertical: 10.0),
@@ -200,7 +205,7 @@ class _InstPageState extends State<InstPage> {
       ),
       onPressed: () {
         /* TODO: Navegar a la siguiente pantalla llevando la informacion del selectedSchool */
-        navegacionModel.paginaActual = 1;
+        Navigator.of(context).pushReplacementNamed('login');
         /* Navigator.of(context)
             .pushReplacementNamed('login', arguments: selectedSchool); */
       },

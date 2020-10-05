@@ -2,7 +2,7 @@ import 'dart:async';
 
 class Validators {
   final validateUser =
-      StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
+      StreamTransformer<String, String>.fromHandlers(handleData: (user, sink) {
     /* Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern);
@@ -11,8 +11,8 @@ class Validators {
         ? sink.add(email)
         : sink.addError('Email incorrecto'); */
 
-    (email.length >= 8)
-        ? sink.add(email)
+    (user.length >= 8)
+        ? sink.add(user)
         : sink.addError('no es un usuario valido');
   });
 

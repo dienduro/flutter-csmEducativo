@@ -3,6 +3,7 @@ import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart';
 import 'package:flutter_csm_tecnologia/src/providers/institucion_to_login.dart';
 import 'package:provider/provider.dart';
 
@@ -23,18 +24,24 @@ class _HomePageState extends State<HomePage> {
 class _Paginas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final navegacionModel = Provider.of<NavegacionModel>(context);
+    /* final navegacionModel = Provider.of<NavegacionModel>(context); */
     return /* LoginInherited(
       child: */
         PageView(
-      controller: navegacionModel.pageController,
+      /* controller: navegacionModel.pageController, */
       physics: NeverScrollableScrollPhysics(),
       children: [
+        _splashPage(),
         _institutionPage(),
         _loginPage(),
       ],
+      /*  ), */
     );
     /* ); */
+  }
+
+  Widget _splashPage() {
+    return SplashScreen();
   }
 
   Widget _institutionPage() {

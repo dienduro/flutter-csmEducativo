@@ -233,7 +233,11 @@ class LoginPage extends StatelessWidget {
                       'Ingresar',
                       style: TextStyle(fontSize: 20.0, color: Colors.white60),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(
+                        'notes',
+                      );
+                    },
                   )
                 : Container());
       },
