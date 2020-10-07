@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_csm_tecnologia/src/bloc/instituciones/school_bloc.dart';
+import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
 
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
 
 class InstPage extends StatefulWidget {
+  static final String routeName = 'institution';
   @override
   _InstPageState createState() => _InstPageState();
 }
 
 class _InstPageState extends State<InstPage> {
+  final institucionesProvider = new InstitucionesProvider();
   /* final institucionesProvider = new InstitucionesProvider(); */
   /*  School selectedSchool; */
+  final schoolBloc = new SchoolBloc();
   InstitucionModel selectedSchool;
+  TextEditingController _textController;
+
+  final prefs = new UserPreferences();
+  @override
+  void initState() {
+    _textController = TextEditingController(text: prefs.school);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     /* institucionesProvider.getInstituciones(); */
 
     /* final _screenSize = MediaQuery.of(context).size; */
@@ -127,7 +145,7 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10,
               ),
-              (selectedSchool != null)
+              (_textController != null)
                   ? _botonAcceso(context)
                   : SizedBox(
                       height: 20.0,
@@ -140,57 +158,61 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _searchSchool() {
+    /*  String _texto = 'insititucion'; */
+
     /* TODO: Crear Bloc de Stream para el seach School */
-    return StreamBuilder<Object>(
-        stream: null,
-        builder: (context, snapshot) {
-          return TextField(
-            onTap: () async {
-              final selectedInstitute = await showSearch(
-                context: context,
-                delegate: DataSearch(),
-              );
 
-              if (selectedInstitute == null) {
-                print('no se obtuvieron datos');
-                return selectedInstitute;
-              } else {
-                selectedSchool = selectedInstitute;
-                setState(() {});
-                return selectedSchool;
-              }
+    return StreamBuilder(
+      stream: schoolBloc.institucionesStream,
+      builder: (context, snapshot) {
+        return TextField(
+          autofocus: true,
+          onChanged: (value) async => await showSearch(
+            context: context,
+            delegate: DataSearch(),
+            query: value,
+          ).then((result) async {
+            if (result == null) {
+              print('no se obtuvieron datos');
+            } else {
+              prefs.school = result.nombre;
+              prefs.idSchool = result.id;
+              selectedSchool = result;
+              setState(() {});
 
-              /* print(selectedInstitute); */
+              print('se econtraron datos$result');
+              /* TODO:devolver el resultado en su textEditinController */
 
-              /* print('InstitutionPage: $selectedInstitute'); */
-            },
-            style: TextStyle(color: Colors.black),
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              errorText: null,
-              /*  errorText: snapshot.error, */
-              icon: Icon(
-                FontAwesomeIcons.school,
-                size: 20.0,
-                /* color: Colors.white, */
-              ),
-              filled: true,
-              fillColor: Colors.white38,
-              labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-              labelText: (selectedSchool != null)
-                  ? selectedSchool.nombre
-                  : 'Institucion',
-              hintStyle: TextStyle(color: Colors.black),
-              /* hintText: 'Institución', */
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              /* counterText: snapshot.data, */
-              counterStyle:
-                  TextStyle(color: Theme.of(context).primaryColorDark),
+              /* _texto = result.nombre; */
+            }
+          }),
+          controller: _textController,
+          style: TextStyle(color: Colors.black),
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            /*  errorText: snapshot.error, */
+            icon: Icon(
+              FontAwesomeIcons.school,
+              size: 20.0,
+              /* color: Colors.white, */
             ),
-          );
-        });
+            filled: true,
+            fillColor: Colors.white38,
+            labelStyle: TextStyle(color: Colors.black, fontSize: 20),
+            labelText: (selectedSchool != null)
+                ? selectedSchool.nombre
+                : 'Institucion',
+            hintStyle: TextStyle(color: Colors.black),
+            /* hintText: 'Institución', */
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            /* counterText: snapshot.data, */
+            counterStyle: TextStyle(color: Theme.of(context).primaryColorDark),
+          ),
+        );
+      },
+    );
   }
 
   Widget _botonAcceso(BuildContext context) {

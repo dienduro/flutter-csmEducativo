@@ -4,11 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  static final String routeName = 'login';
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final prefs = new UserPreferences();
+  String _userName;
+  String _idUser;
+  /*  TextEditingController controllerUser = new TextEditingController();
+  TextEditingController controllerPassword = new TextEditingController(); */
+  @override
+  void initState() {
+    _userName = prefs.userName;
+    _userName = prefs.idUser;
+
+    prefs.lastPage = LoginPage.routeName;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    /* SystemChrome.setPreferredOrientations(DeviceOrientation.values); */
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -49,7 +71,6 @@ class LoginPage extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -85,7 +106,7 @@ class LoginPage extends StatelessWidget {
                 ? size.height * 0.5
                 : size.height * 0.8,
             width: size.width * 0.78,
-            margin: EdgeInsets.symmetric(vertical: 50.0),
+            margin: EdgeInsets.symmetric(vertical: 40.0),
             padding: EdgeInsets.symmetric(vertical: 30.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -109,7 +130,7 @@ class LoginPage extends StatelessWidget {
           child: Icon(
             Icons.person_pin,
             size: 100.0,
-            color: Color.fromARGB(220, 200, 200, 200),
+            color: Color.fromARGB(235, 200, 200, 200),
           ),
         ),
       ],
@@ -137,7 +158,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-/* recordar exportar las propiedades en login_provider par que me pueda leer en la instancia */
   Widget _crearUsuario(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.userStream,

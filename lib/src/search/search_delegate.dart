@@ -9,7 +9,7 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
   final institucionesProvider = new InstitucionesProvider();
   InstitucionModel institucionModel = new InstitucionModel();
 
-  String seleccion = '';
+  /* String seleccion = '';
   final instituciones = [
     'claretiano',
     'santaLibrada',
@@ -22,10 +22,9 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
   final institucionesRecien = [
     'La fragua',
     'la normal',
-  ];
+  ]; */
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -38,7 +37,6 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -52,17 +50,19 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-
     if (query.isEmpty) {
-      return Center(child: CircularProgressIndicator());
+      return Center(child: Text('no se encontraron resultados'));
     }
+
+    return _crearListadoVistas();
+  }
+
+  Widget _crearListadoVistas() {
     return FutureBuilder(
       future: institucionesProvider.getInstituciones(),
       builder: (context, AsyncSnapshot<List<InstitucionModel>> snapshot) {
@@ -80,39 +80,27 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
               ),
         );
 
-        /* print(query = result.toString()); */
+        return _listViewResult(instiList, result);
+      },
+    );
+  }
 
-        return ListView.builder(
-          itemCount: instiList.length.compareTo(0),
-          itemBuilder: (context, index) {
-            /* final snackBar = SnackBar(content: Text('sin datos')); */
-            final matchResult = result
-                .map(
-                  (e) => _listarResultado(context, e),
-                )
-                .toList();
-            if (matchResult.isEmpty) {
-              return Container();
-            }
-            /* print(matchResult[index]); */
-            return matchResult[index];
-          },
-        );
+  Widget _listViewResult(
+      List<InstitucionModel> instiList, Iterable<InstitucionModel> result) {
+    return ListView.builder(
+      itemCount: instiList.length.compareTo(0),
+      itemBuilder: (context, index) {
+        /* final snackBar = SnackBar(content: Text('sin datos')); */
+        final matchResult = result
+            .map(
+              (e) => _listarResultado(context, e),
+            )
+            .toList();
+        if (matchResult.isEmpty) {
+          return Container();
+        }
 
-        /* ListView(
-          children: result
-              .map<ListTile>((e) => ListTile(
-                    leading: Icon(FontAwesomeIcons.school),
-                    title: Text(e.nombre),
-                    subtitle: Text(e.id),
-                    onTap: () {
-                      prin
-                      Navigator.of(context).popAndPushNamed('institution',
-                          result: e.id, arguments: e.id);
-                    },
-                  ))
-              .toList(),
-        ); */
+        return matchResult[index];
       },
     );
   }
@@ -124,7 +112,7 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
       title: Text('${resultInstitucion.nombre}'),
       trailing: Text('${resultInstitucion.id}'),
       onTap: () {
-        /* print(resultInstitucion); */
+        /* query = institucionModel.nombre; */
         this.close(context, resultInstitucion);
       },
     );

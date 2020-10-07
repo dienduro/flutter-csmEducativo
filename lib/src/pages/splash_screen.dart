@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget /* StatelessWidget */ {
+  static final String routeName = 'splash';
   const SplashScreen({Key key}) : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 10),
       () => Navigator.of(context).pushReplacementNamed('institution'),
     );
   }

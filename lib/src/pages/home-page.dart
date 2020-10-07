@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart';
-import 'package:flutter_csm_tecnologia/src/providers/institucion_to_login.dart';
-import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+class HomePage extends StatelessWidget {
+  static final String routeName = 'home';
 
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

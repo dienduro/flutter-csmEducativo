@@ -2,11 +2,19 @@ import 'dart:async';
 
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_validators.dart';
 import 'package:rxdart/rxdart.dart';
+/* import 'package:http/http.dart' as http; */
 
 class LoginBloc with Validators {
   /* los conbinelettesr no trabaja con Stream controller osea el rxdart tiene una funcion para trabajar con ella es el behaviorSubject */
   final _userController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
+
+  /*  Future<List> login() async {
+    final resp = await http.post("link base de datos login", body: {
+      "username": _userController.value,
+      "password": _passwordController.value,
+    });
+  } */
 
 //recuperar los datos escuchado del stream
   Stream<String> get userStream =>
