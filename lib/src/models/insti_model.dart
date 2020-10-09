@@ -8,8 +8,8 @@ String schoolModelToJson(List<SchoolModel> data) =>
 
 class SchoolModel {
   SchoolModel({
-    this.id = '',
-    this.nombre = '',
+    this.id,
+    this.nombre,
   });
 
   String id;
@@ -24,9 +24,4 @@ class SchoolModel {
         "id": id,
         "nombre": nombre,
       };
-  @override
-  String toString() {
-    // TODO: implement toString
-    return 'instance of instituciones:$nombre';
-  }
 }

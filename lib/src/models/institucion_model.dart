@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-InstitucionModel instituteModelFromJson(String str) =>
+/* InstitucionModel instituteModelFromJson(String str) =>
     InstitucionModel.fromJson(json.decode(str));
 
 String instituteModelToJson(InstitucionModel data) =>
     json.encode(data.toJson());
+ */
 
-class Instituciones {
+/* class Instituciones {
   List<InstitucionModel> items = new List();
 
   Instituciones();
@@ -19,7 +20,7 @@ class Instituciones {
       items.add(instituto);
     }
   }
-}
+} */
 
 /* List<Instituciones> institucionesFromJson(String str) =>
     List<Instituciones>.from(
@@ -29,6 +30,13 @@ String institucionesToJson(List<Instituciones> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson()))); */
 
 class InstitucionModel {
+  List<InstitucionModel> schoolModelFromJson(String str) =>
+      List<InstitucionModel>.from(
+          json.decode(str).map((x) => InstitucionModel.fromJson(x)));
+
+  String schoolModelToJson(List<InstitucionModel> data) =>
+      json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
   InstitucionModel({
     this.id = '',
     this.nombre = '',

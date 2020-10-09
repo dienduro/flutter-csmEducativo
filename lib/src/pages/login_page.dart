@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+import 'package:flutter_csm_tecnologia/src/services/user_login_provider.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   static final String routeName = 'login';
@@ -13,25 +16,30 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final prefs = new UserPreferences();
-  String _userName;
-  String _idUser;
-  /*  TextEditingController controllerUser = new TextEditingController();
-  TextEditingController controllerPassword = new TextEditingController(); */
+
+  final userProvider = new UsuarioProvider();
+  /* String _userName;
+  String _idUser; */
+  TextEditingController controllerUser;
+  TextEditingController controllerPassword;
   @override
   void initState() {
-    _userName = prefs.userName;
-    _userName = prefs.idUser;
-
-    prefs.lastPage = LoginPage.routeName;
+    /* _userName = prefs.userName;
+    _userName = prefs.idUser; */
+    controllerUser = TextEditingController(text: prefs.userName);
+    controllerPassword = TextEditingController(text: prefs.passwordUser);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    prefs.lastPage = LoginPage.routeName;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
+      key: scaffoldKey,
       body: Stack(
         children: <Widget>[
           _crearFondo(context),
@@ -103,9 +111,9 @@ class _LoginPageState extends State<LoginPage> {
         SingleChildScrollView(
           child: Container(
             height: orientation == Orientation.portrait
-                ? size.height * 0.5
+                ? size.height * 0.52
                 : size.height * 0.8,
-            width: size.width * 0.78,
+            width: size.width * 0.80,
             margin: EdgeInsets.symmetric(vertical: 40.0),
             padding: EdgeInsets.symmetric(vertical: 30.0),
             decoration: BoxDecoration(
@@ -150,9 +158,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 20.0,
         ),
         _crearPassword(bloc),
-        SizedBox(
-          height: 20.0,
-        ),
+        Spacer(),
         _crearboton(bloc),
       ],
     );
@@ -165,6 +171,7 @@ class _LoginPageState extends State<LoginPage> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: TextField(
+            controller: controllerUser,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.white24,
             decoration: InputDecoration(
@@ -202,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: TextField(
+            /*  controller: controllerPassword, */
             obscureText: true,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.white24,
@@ -243,22 +251,30 @@ class _LoginPageState extends State<LoginPage> {
                 Color.fromARGB(40, 90, 175, 120),
                 Color.fromARGB(120, 47, 188, 145),
               ])),
-          child: (snapshot.hasData)
-              ? FlatButton(
-                  /*  color: Colors.white54, */
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                  shape: StadiumBorder(),
-                  child: Text(
-                    'Ingresar',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white60),
-                  ),
-                  onPressed:
-                      snapshot.hasData ? () => _login(bloc, context) : null)
-              : Container(),
+          child:
+              (snapshot.hasData) ? flatButtonlogin(bloc, context) : Container(),
         );
       },
     );
+  }
+
+  Widget flatButtonlogin(LoginBloc bloc, BuildContext context) {
+    final userProvider = new UsuarioProvider();
+    return FutureBuilder(
+        future: userProvider.login(bloc.lastUser, bloc.lastPsswrd),
+        builder: (_, snapshot) {
+          return FlatButton(
+            /*  color: Colors.white54, */
+            padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+            shape: StadiumBorder(),
+            child: Text(
+              'Ingresar',
+              style: TextStyle(fontSize: 20.0, color: Colors.white60),
+            ),
+            onPressed: () => _login(bloc, context),
+            /* snapshot.hasData ? () */
+          );
+        });
   }
 
   _login(LoginBloc bloc, BuildContext context) {
@@ -266,6 +282,18 @@ class _LoginPageState extends State<LoginPage> {
     print('User: ${bloc.lastUser}');
     print('Password: ${bloc.lastPsswrd}');
     print('================');
+    /* TODO:Identificar el usuarion y password con el token de la base de datos 
+    lo que dicho token sera el id usuario
+     */
+    prefs.userName = bloc.lastUser;
+
+    /* prefs.passwordUser = bloc.lastPsswrd; */
+
+    final bytes = utf8.encode(bloc.lastPsswrd);
+    final digest = sha1.convert(bytes);
+    prefs.passwordUser = digest.toString();
+
+    userProvider.login(prefs.userName, prefs.passwordUser);
     Navigator.of(context).pushReplacementNamed('notes');
   }
 }

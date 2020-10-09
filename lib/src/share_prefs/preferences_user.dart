@@ -40,6 +40,14 @@ class UserPreferences {
     _prefs.setString('idUser', value);
   }
 
+  get passwordUser {
+    return _prefs.getString('pwdUsr') ?? '';
+  }
+
+  set passwordUser(String value) {
+    _prefs.setString('pwdUsr', value);
+  }
+
   get userName {
     return _prefs.getString('idUser') ?? '';
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
-import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 /* import 'package:flutter_csm_tecnologia/src/widget/cargarInstituciones_widget.dart';
  */
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -73,6 +73,7 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
             ),
           );
         }
+
         final instiList = snapshot.data;
         final result = instiList.where(
           (element) => element.nombre.toLowerCase().contains(

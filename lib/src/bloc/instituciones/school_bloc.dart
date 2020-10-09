@@ -1,5 +1,5 @@
 import 'package:flutter_csm_tecnologia/src/models/institucion_model.dart';
-import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 import 'package:rxdart/subjects.dart';
 
 class SchoolBloc with InstitucionesProvider {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/instituciones/school_bloc.dart';
-import 'package:flutter_csm_tecnologia/src/providers/instituciones_provider.dart';
+import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_csm_tecnologia/src/search/search_delegate.dart';
@@ -16,16 +17,18 @@ class InstPage extends StatefulWidget {
 
 class _InstPageState extends State<InstPage> {
   final institucionesProvider = new InstitucionesProvider();
-  /* final institucionesProvider = new InstitucionesProvider(); */
-  /*  School selectedSchool; */
+
   final schoolBloc = new SchoolBloc();
   InstitucionModel selectedSchool;
   TextEditingController _textController;
 
   final prefs = new UserPreferences();
+  String newText = '';
   @override
   void initState() {
     _textController = TextEditingController(text: prefs.school);
+
+    _textController.addListener(schoolBloc.instanciaInsti(selectedSchool));
 
     super.initState();
   }
@@ -33,9 +36,6 @@ class _InstPageState extends State<InstPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    /* institucionesProvider.getInstituciones(); */
-
-    /* final _screenSize = MediaQuery.of(context).size; */
 
     return Scaffold(
       body: Stack(
@@ -103,8 +103,6 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _crearFondoForm(BuildContext context) {
-    /* final searchModalRoute = ModalRoute.of(context).settings.arguments; */
-
     return Center(
       child: Container(
         width: 330.0,
@@ -138,14 +136,10 @@ class _InstPageState extends State<InstPage> {
                 height: 10.0,
               ),
               _searchSchool(),
-              /* TODO: del textfiel ponerlo o dibujar el texto en su textController
-              que me escuche los cambios de la busqueda de la clase DataSearch
-               y dibjarlo en el textfield */
-
               SizedBox(
                 height: 10,
               ),
-              (_textController != null)
+              (schoolBloc.getInstituciones() != null)
                   ? _botonAcceso(context)
                   : SizedBox(
                       height: 20.0,
@@ -158,43 +152,53 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _searchSchool() {
-    /*  String _texto = 'insititucion'; */
-
-    /* TODO: Crear Bloc de Stream para el seach School */
-
     return StreamBuilder(
       stream: schoolBloc.institucionesStream,
       builder: (context, snapshot) {
         return TextField(
-          autofocus: true,
-          onChanged: (value) async => await showSearch(
+          /* autofocus: true, */
+          onTap: () async => await showSearch(
+            context: context,
+            delegate: DataSearch(),
+          ).then((result) async {
+            if (result == null) {
+              print('no se obtuvieron datos');
+            } else {
+              _textController.text = result.nombre;
+              prefs.school = result.nombre;
+              prefs.idSchool = result.id;
+              selectedSchool = result;
+              prefs.lastPage = InstPage.routeName;
+              setState(() {});
+
+              print('se econtraron datos$result');
+            }
+          }),
+          onChanged: (value) {},
+
+          /* async => await showSearch(
             context: context,
             delegate: DataSearch(),
             query: value,
           ).then((result) async {
             if (result == null) {
               print('no se obtuvieron datos');
-            } else {
-              prefs.school = result.nombre;
+            } */
+          /* prefs.school = result.nombre;
               prefs.idSchool = result.id;
               selectedSchool = result;
-              setState(() {});
+              prefs.lastPage = InstPage.routeName; */
 
-              print('se econtraron datos$result');
-              /* TODO:devolver el resultado en su textEditinController */
-
-              /* _texto = result.nombre; */
-            }
-          }),
+          onSubmitted: (value) {
+            value = newText;
+          },
           controller: _textController,
           style: TextStyle(color: Colors.black),
           cursorColor: Colors.black,
           decoration: InputDecoration(
-            /*  errorText: snapshot.error, */
             icon: Icon(
               FontAwesomeIcons.school,
               size: 20.0,
-              /* color: Colors.white, */
             ),
             filled: true,
             fillColor: Colors.white38,
@@ -226,12 +230,8 @@ class _InstPageState extends State<InstPage> {
         style: TextStyle(fontSize: 15.0),
       ),
       onPressed: () {
-        /* TODO: Navegar a la siguiente pantalla llevando la informacion del selectedSchool */
         Navigator.of(context).pushReplacementNamed('login');
-        /* Navigator.of(context)
-            .pushReplacementNamed('login', arguments: selectedSchool); */
       },
-      /* snapshot.hasData ? () => _login(context, bloc) : null */
     );
   }
 }

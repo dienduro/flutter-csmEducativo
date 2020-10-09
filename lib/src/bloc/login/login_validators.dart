@@ -11,17 +11,22 @@ class Validators {
         ? sink.add(email)
         : sink.addError('Email incorrecto'); */
 
-    (user.length >= 8)
+    (user.length >= 4)
         ? sink.add(user)
         : sink.addError('no es un usuario valido');
   });
 
   final validarPsswrd =
       StreamTransformer<String, String>.fromHandlers(handleData: (pass, sink) {
-    if (pass.length >= 6) {
-      sink.add(pass);
+    final n = num.tryParse(pass);
+
+    if (n == null) {
+      sink.addError('Solo numeros por favor');
+      /* TODO:VALIDAR LA ENTRADA DEL PASSWORD CON EL STRINGIN DE PASSWORD */
     } else {
-      sink.addError('Mas de 6 caracteres.');
+      return sink.add(pass);
     }
+/* aea88e9440c445013aa0acc127ea988d501cc4b5 */
+    /*  sink.add(pass); */
   });
 }

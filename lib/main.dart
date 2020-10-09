@@ -14,6 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final prefs = new UserPreferences();
   @override
   Widget build(BuildContext context) {
     return /*  MultiProvider(
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: miTema,
         title: 'Csm Educativo App',
-        initialRoute: 'home',
+        initialRoute: prefs.lastPage,
         routes: getPageRoutes(),
         /* ), */
       ),
