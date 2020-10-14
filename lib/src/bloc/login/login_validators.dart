@@ -1,5 +1,9 @@
 import 'dart:async';
 
+/* import 'dart:convert';
+
+import 'package:crypto/crypto.dart'; */
+
 class Validators {
   final validateUser =
       StreamTransformer<String, String>.fromHandlers(handleData: (user, sink) {
@@ -22,11 +26,11 @@ class Validators {
 
     if (n == null) {
       sink.addError('Solo numeros por favor');
-      /* TODO:VALIDAR LA ENTRADA DEL PASSWORD CON EL STRINGIN DE PASSWORD */
+    } else if (pass.length < 3) {
+      /* pass = digest; */
+      sink.addError('Mas de 3 caracteres.');
     } else {
       return sink.add(pass);
     }
-/* aea88e9440c445013aa0acc127ea988d501cc4b5 */
-    /*  sink.add(pass); */
   });
 }

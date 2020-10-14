@@ -49,11 +49,11 @@ class UserPreferences {
   }
 
   get userName {
-    return _prefs.getString('idUser') ?? '';
+    return _prefs.getString('userName') ?? '';
   }
 
   set userName(String value) {
-    _prefs.setString('idUser', value);
+    _prefs.setString('userName', value);
   }
 
   get lastPage {

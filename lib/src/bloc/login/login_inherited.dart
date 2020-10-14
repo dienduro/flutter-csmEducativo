@@ -6,7 +6,9 @@ export 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 class LoginInherited extends InheritedWidget {
   static LoginInherited _instancia;
 
-/* hacer que a pensar que yo haga el hotrestar se mantenga esa informacion cuando yo cambie de pantalla y se matenga esa misma informacion */
+/* hacer que aunque yo haga el hotrestar se mantenga esa informacion cuando yo cambie de pantalla y se matenga esa misma informacion */
+  final loginBloc = LoginBloc();
+
   factory LoginInherited({Key key, Widget child}) {
     if (_instancia == null) {
       _instancia = new LoginInherited._internal(
@@ -23,8 +25,6 @@ class LoginInherited extends InheritedWidget {
           key: key,
           child: child,
         );
-
-  final loginBloc = LoginBloc();
 
   static LoginBloc of(BuildContext context) {
     return context

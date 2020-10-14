@@ -58,7 +58,6 @@ class InstitucionModel {
 
   @override
   String toString() {
-    // TODO: implement toString
     return 'instance of instituciones:$nombre';
   }
 }

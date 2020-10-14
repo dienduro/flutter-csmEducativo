@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-List<Login> loginFromJson(String str) =>
-    List<Login>.from(json.decode(str).map((x) => Login.fromJson(x)));
+LoginModel userFromJson(String str) => LoginModel.fromJson(json.decode(str));
 
-String loginToJson(List<Login> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String userToJson(LoginModel data) => json.encode(data.toJson());
 
-class Login {
-  Login({
+class LoginModel {
+  LoginModel({
     this.estado,
     this.success,
     this.codigoMensaje,
@@ -23,7 +21,7 @@ class Login {
   Datos datos;
   int total;
 
-  factory Login.fromJson(Map<String, dynamic> json) => Login(
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
         estado: json["estado"],
         success: json["success"],
         codigoMensaje: json["codigoMensaje"],

@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+import 'package:flutter_csm_tecnologia/src/models/user_model.dart';
 import 'package:flutter_csm_tecnologia/src/services/user_login_provider.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
+
+import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   static final String routeName = 'login';
@@ -36,6 +39,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.teal,
+      ),
+    );
     prefs.lastPage = LoginPage.routeName;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
@@ -171,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: TextField(
-            controller: controllerUser,
+            /* controller: controllerUser, */
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.white24,
             decoration: InputDecoration(
@@ -210,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: TextField(
             /*  controller: controllerPassword, */
+
             obscureText: true,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.white24,
@@ -232,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
               counterStyle:
                   TextStyle(color: Theme.of(context).primaryColorLight),
             ),
-            keyboardType: TextInputType.visiblePassword,
+            keyboardType: TextInputType.number,
             onChanged: bloc.changePass,
           ),
         );
@@ -259,41 +268,62 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget flatButtonlogin(LoginBloc bloc, BuildContext context) {
-    final userProvider = new UsuarioProvider();
-    return FutureBuilder(
-        future: userProvider.login(bloc.lastUser, bloc.lastPsswrd),
-        builder: (_, snapshot) {
-          return FlatButton(
-            /*  color: Colors.white54, */
-            padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-            shape: StadiumBorder(),
-            child: Text(
-              'Ingresar',
-              style: TextStyle(fontSize: 20.0, color: Colors.white60),
-            ),
-            onPressed: () => _login(bloc, context),
-            /* snapshot.hasData ? () */
-          );
-        });
+    return FlatButton(
+      /*  color: Colors.white54, */
+      padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+      shape: StadiumBorder(),
+      child: Text(
+        'Ingresar',
+        style: TextStyle(fontSize: 20.0, color: Colors.white60),
+      ),
+      onPressed: () async => _login(bloc, context),
+
+      /* snapshot.hasData ? () */
+    );
   }
 
-  _login(LoginBloc bloc, BuildContext context) {
+  void mostrarSnackbar(String mensaje) async {
+    LoginModel login;
+    final snackbar = SnackBar(
+      content: Text(mensaje),
+      duration: Duration(milliseconds: 1500),
+    );
+    if (login.estado == true) {
+      scaffoldKey.currentState.showSnackBar(snackbar);
+    }
+  }
+
+  _login(LoginBloc bloc, BuildContext context) async {
+    final userProvider = new UsuarioProvider();
+    final prefs = new UserPreferences();
+
     print('================');
     print('User: ${bloc.lastUser}');
     print('Password: ${bloc.lastPsswrd}');
     print('================');
-    /* TODO:Identificar el usuarion y password con el token de la base de datos 
-    lo que dicho token sera el id usuario
+    /* TODO:Identificar el usuarion y password con el para que coincida con la api de la base de datos 
+    
      */
-    prefs.userName = bloc.lastUser;
-
-    /* prefs.passwordUser = bloc.lastPsswrd; */
 
     final bytes = utf8.encode(bloc.lastPsswrd);
-    final digest = sha1.convert(bytes);
-    prefs.passwordUser = digest.toString();
+    final digest = sha1.convert(bytes).toString();
+    prefs.passwordUser = digest;
 
-    userProvider.login(prefs.userName, prefs.passwordUser);
+    Map info = await userProvider.login(bloc.lastUser, prefs.passwordUser);
+
+    if (info['estado']) {
+      Navigator.pushReplacementNamed(context, 'notes');
+      prefs.userName = bloc.lastUser;
+    } else {
+      mostrarAlerta(context, info['mensaje']);
+    }
+
+    /* if (login.estado == true) {
     Navigator.of(context).pushReplacementNamed('notes');
+  }else{
+
+  } */
+
+    /* Navigator.of(context).pushReplacementNamed('notes'); */
   }
 }

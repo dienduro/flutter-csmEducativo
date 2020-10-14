@@ -48,6 +48,7 @@ class NotasPage extends StatelessWidget {
         body: Stack(
           children: [
             _crearFondo(context),
+            _crearDropdowns(),
           ],
         ));
   }
@@ -86,6 +87,82 @@ class NotasPage extends StatelessWidget {
           child: _logoCsm,
         ),
       ],
+    );
+  }
+
+  Widget _crearDropdowns() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _dropdownAno(),
+        _dropdownAsignatura(),
+      ],
+    );
+  }
+
+  Widget _dropdownAno() {
+    return Padding(
+      padding: const EdgeInsets.all(9.0),
+      child: Container(
+        height: 50,
+        width: 160,
+        padding: EdgeInsets.only(left: 6, right: 2, top: 14),
+        decoration:
+            BoxDecoration(color: Colors.green[700], shape: BoxShape.rectangle),
+        child: DropdownButton(
+          isDense: true,
+          dropdownColor: Colors.green[700],
+          isExpanded: true,
+          iconEnabledColor: Colors.white,
+          style: TextStyle(color: Colors.white, fontSize: 18),
+          items: [
+            DropdownMenuItem(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '2020',
+                ),
+              ],
+            ))
+          ],
+          onChanged: (value) {},
+        ),
+      ),
+    );
+  }
+
+  Widget _dropdownAsignatura() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 8),
+      child: Container(
+        height: 50,
+        width: 250,
+        padding: EdgeInsets.only(left: 6, right: 2, top: 14),
+        decoration:
+            BoxDecoration(color: Colors.green[700], shape: BoxShape.rectangle),
+        child: DropdownButton(
+          isDense: true,
+          dropdownColor: Colors.green[700],
+          isExpanded: true,
+          iconEnabledColor: Colors.white,
+          style: TextStyle(color: Colors.white, fontSize: 18),
+          items: [
+            DropdownMenuItem(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Todos',
+                ),
+              ],
+            ))
+          ],
+          onChanged: (value) {},
+        ),
+      ),
     );
   }
 }

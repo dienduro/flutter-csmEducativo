@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/instituciones/school_bloc.dart';
-import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
