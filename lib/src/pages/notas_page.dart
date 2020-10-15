@@ -1,50 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+/* import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
+ */
+import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
+import 'package:flutter_csm_tecnologia/src/widget/menu_widget.dart';
 
 class NotasPage extends StatelessWidget {
   static final String routeName = 'notes';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final prefs = new UserPreferences();
 
   @override
   Widget build(BuildContext context) {
+    prefs.lastPage = NotasPage.routeName;
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    final bloc = LoginInherited.of(context);
+    /* final bloc = LoginInherited.of(context); */
     return Scaffold(
-        key: _scaffoldKey,
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: const <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(color: Colors.teal),
-                child: Text(
-                  'Drawer Header',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text('Messages'),
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-              ),
-            ],
-          ),
-        ),
         appBar: AppBar(
-          title: Text('tus notas: ${bloc.lastUser}'),
+          title: Text('CSM Educativo'),
           actions: [],
         ),
+        key: _scaffoldKey,
+        drawer: MenuWidget(),
         body: Stack(
           children: [
             _crearFondo(context),

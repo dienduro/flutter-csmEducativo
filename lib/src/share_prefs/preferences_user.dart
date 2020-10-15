@@ -56,6 +56,14 @@ class UserPreferences {
     _prefs.setString('userName', value);
   }
 
+  get studentName {
+    return _prefs.getString('student') ?? '';
+  }
+
+  set studentName(String value) {
+    _prefs.setString('student', value);
+  }
+
   get lastPage {
     return _prefs.getString('lastPage') ?? 'home';
   }

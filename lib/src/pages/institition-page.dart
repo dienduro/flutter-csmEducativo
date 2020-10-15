@@ -23,10 +23,11 @@ class _InstPageState extends State<InstPage> {
 
   final prefs = new UserPreferences();
   String newText = '';
+
   @override
   void initState() {
     _textController = TextEditingController(text: prefs.school);
-
+    selectedSchool ?? Container();
     _textController.addListener(schoolBloc.instanciaInsti(selectedSchool));
 
     super.initState();
@@ -102,6 +103,7 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _crearFondoForm(BuildContext context) {
+    prefs.lastPage = InstPage.routeName;
     return Center(
       child: Container(
         width: 330.0,
@@ -134,15 +136,11 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10.0,
               ),
-              _searchSchool(),
+              _searchSchoolField(),
               SizedBox(
                 height: 10,
               ),
-              (schoolBloc.getInstituciones() != null)
-                  ? _botonAcceso(context)
-                  : SizedBox(
-                      height: 20.0,
-                    ),
+              (selectedSchool != null) ? _botonAcceso(context) : Container(),
             ],
           ),
         ),
@@ -150,47 +148,36 @@ class _InstPageState extends State<InstPage> {
     );
   }
 
-  Widget _searchSchool() {
+  void _search() async {
+    bool hasData = false;
+    var info = await showSearch(
+      context: context,
+      delegate: DataSearch(),
+    ).then(
+      (result) async {
+        if (result == null) {
+          print('no se obtuvieron datos');
+        } else {
+          _textController.text = result.nombre;
+          prefs.school = result.nombre;
+          prefs.idSchool = result.id;
+          selectedSchool = result;
+
+          print('se econtraron datos$result');
+        }
+      },
+    );
+    hasData = true;
+    info = hasData;
+    return info;
+  }
+
+  Widget _searchSchoolField() {
     return StreamBuilder(
       stream: schoolBloc.institucionesStream,
       builder: (context, snapshot) {
         return TextField(
-          /* autofocus: true, */
-          onTap: () async => await showSearch(
-            context: context,
-            delegate: DataSearch(),
-          ).then((result) async {
-            if (result == null) {
-              print('no se obtuvieron datos');
-            } else {
-              _textController.text = result.nombre;
-              prefs.school = result.nombre;
-              prefs.idSchool = result.id;
-              selectedSchool = result;
-              prefs.lastPage = InstPage.routeName;
-              setState(() {});
-
-              print('se econtraron datos$result');
-            }
-          }),
-          onChanged: (value) {},
-
-          /* async => await showSearch(
-            context: context,
-            delegate: DataSearch(),
-            query: value,
-          ).then((result) async {
-            if (result == null) {
-              print('no se obtuvieron datos');
-            } */
-          /* prefs.school = result.nombre;
-              prefs.idSchool = result.id;
-              selectedSchool = result;
-              prefs.lastPage = InstPage.routeName; */
-
-          onSubmitted: (value) {
-            value = newText;
-          },
+          onTap: () => _search(),
           controller: _textController,
           style: TextStyle(color: Colors.black),
           cursorColor: Colors.black,
@@ -206,11 +193,9 @@ class _InstPageState extends State<InstPage> {
                 ? selectedSchool.nombre
                 : 'Institucion',
             hintStyle: TextStyle(color: Colors.black),
-            /* hintText: 'Institución', */
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            /* counterText: snapshot.data, */
             counterStyle: TextStyle(color: Theme.of(context).primaryColorDark),
           ),
         );
@@ -228,9 +213,7 @@ class _InstPageState extends State<InstPage> {
         'Ingresar',
         style: TextStyle(fontSize: 15.0),
       ),
-      onPressed: () {
-        Navigator.of(context).pushReplacementNamed('login');
-      },
+      onPressed: () => Navigator.of(context).pushReplacementNamed('login'),
     );
   }
 }

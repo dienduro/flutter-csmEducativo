@@ -8,7 +8,6 @@ class LoginBloc with Validators {
   /* los conbinelettesr no trabaja con Stream controller osea el rxdart tiene una funcion para trabajar con ella es el behaviorSubject */
   final _userController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
-  final _ingresoController = BehaviorSubject<String>();
 
 //recuperar los datos escuchado del stream
   Stream<String> get userStream =>
@@ -31,6 +30,5 @@ class LoginBloc with Validators {
   dispose() {
     _userController?.close();
     _passwordController?.close();
-    _ingresoController?.close();
   }
 }

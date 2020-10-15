@@ -17,3 +17,43 @@ void mostrarAlerta(BuildContext context, String mensaje) {
     },
   );
 }
+
+void mostrarAlertaSplash(BuildContext context, String mensaje) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('no hay acceso al servidor'),
+        content: Text(mensaje),
+        actions: [
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Ok'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void mostrarAlertaUser(BuildContext context, String mensaje) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Esta seguro de cerrar sesion ?'),
+        content: Text(mensaje),
+        actions: [
+          FlatButton(
+            onPressed: () => Navigator.of(context).popAndPushNamed('home'),
+            child: Text('Si'),
+          ),
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('No'),
+          ),
+        ],
+      );
+    },
+  );
+}

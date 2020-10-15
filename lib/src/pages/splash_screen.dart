@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+/* import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
+import 'package:flutter_csm_tecnologia/src/utils/utils.dart'; */
 
 class SplashScreen extends StatefulWidget /* StatelessWidget */ {
   static final String routeName = 'splash';
@@ -15,10 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    /*  instiProv.getInstituciones(); */
+    /* if (instiProv.urlDone == true) { */
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 3),
       () => Navigator.of(context).pushReplacementNamed('institution'),
     );
+    /*  } else {
+      mostrarAlertaSplash(context, 'lo setimos ');
+    } */
   }
 
   @override

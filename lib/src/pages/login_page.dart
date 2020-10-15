@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
-import 'package:flutter_csm_tecnologia/src/models/user_model.dart';
+/* import 'package:flutter_csm_tecnologia/src/models/user_model.dart';
+ */
 import 'package:flutter_csm_tecnologia/src/services/user_login_provider.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:crypto/crypto.dart';
@@ -282,7 +283,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void mostrarSnackbar(String mensaje) async {
+  /* void mostrarSnackbar(String mensaje) async {
     LoginModel login;
     final snackbar = SnackBar(
       content: Text(mensaje),
@@ -291,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
     if (login.estado == true) {
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
-  }
+  } */
 
   _login(LoginBloc bloc, BuildContext context) async {
     final userProvider = new UsuarioProvider();

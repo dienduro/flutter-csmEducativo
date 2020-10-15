@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
-
+/* import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
+ */
 export 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 
 class LoginInherited extends InheritedWidget {
   static LoginInherited _instancia;
+  /* final InstitucionesProvider instiProv ; */
 
 /* hacer que aunque yo haga el hotrestar se mantenga esa informacion cuando yo cambie de pantalla y se matenga esa misma informacion */
   final loginBloc = LoginBloc();

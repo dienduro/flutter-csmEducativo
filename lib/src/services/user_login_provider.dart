@@ -30,6 +30,7 @@ class UsuarioProvider {
       if (decodeResp['estado'] == true) {
         //TODO:salvar el id usuario en el storage
         _prefs.idUser = decodeResp['datos']['usuario']['idUsuario'];
+        _prefs.studentName = decodeResp['datos']['usuario']['nombreCompleto'];
 
         print('contiene datos');
         return {'estado': true, 'usuario': decodeResp['datos']['usuario']};
