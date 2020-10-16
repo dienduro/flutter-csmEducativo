@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuWidget extends StatelessWidget {
   final LoginBloc bloc = new LoginBloc();
@@ -33,12 +34,14 @@ class MenuWidget extends StatelessWidget {
                   color: Colors.blueAccent,
                 ),
                 ListTile(
-                  leading: Icon(Icons.remove_red_eye, color: Colors.blueGrey),
+                  leading: Icon(FontAwesomeIcons.eye, color: Colors.blueGrey),
                   title: Text('Valoraciones'),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).popAndPushNamed('notes');
+                  },
                 ),
                 ListTile(
-                  leading: Icon(Icons.lock_outline, color: Colors.blueGrey),
+                  leading: Icon(FontAwesomeIcons.lock, color: Colors.blueGrey),
                   title: Text('Cambiar contraseña'),
                   onTap: () =>
                       Navigator.pushReplacementNamed(context, 'change'),

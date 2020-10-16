@@ -64,6 +64,30 @@ class UserPreferences {
     _prefs.setString('student', value);
   }
 
+  get idStudiante {
+    return _prefs.getString('idStudent') ?? '';
+  }
+
+  set idStudiante(String value) {
+    _prefs.setString('idStudent', value);
+  }
+
+  get fechaNacimiento {
+    return _prefs.getString('birthday') ?? '';
+  }
+
+  set fechaNacimiento(String value) {
+    _prefs.setString('birthday', value);
+  }
+
+  get identificacion {
+    return _prefs.getString('identify') ?? '';
+  }
+
+  set identificacion(String value) {
+    _prefs.setString('identify', value);
+  }
+
   get lastPage {
     return _prefs.getString('lastPage') ?? 'home';
   }
