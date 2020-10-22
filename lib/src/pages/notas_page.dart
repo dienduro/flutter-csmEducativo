@@ -30,7 +30,10 @@ class NotasPage extends StatelessWidget {
         body: Stack(
           children: [
             _crearFondo(context),
-            _crearDropdowns(),
+            _crearDropdowns(context),
+            Positioned(
+              child: _crearListaAsignaturas(),
+            ),
           ],
         ));
   }
@@ -72,11 +75,18 @@ class NotasPage extends StatelessWidget {
     );
   }
 
-  Widget _crearDropdowns() {
+  Widget _crearDropdowns(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: _size.height * 0.02,
+        ),
         _dropdownAno(),
+        SizedBox(
+          height: _size.height * 0.01,
+        ),
         _dropdownAsignatura(),
       ],
     );
@@ -145,6 +155,37 @@ class NotasPage extends StatelessWidget {
           onChanged: (value) {},
         ),
       ),
+    );
+  }
+
+  Widget _crearListaAsignaturas() {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.2,
+      maxChildSize: 0.76,
+      minChildSize: 0.1,
+      builder: (context, scrollController) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: ListView.builder(
+            itemCount: 20,
+            controller: scrollController,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.white60,
+                borderOnForeground: false,
+                child: ListTile(
+                  onTap: () {
+                    Container(
+                      child: Text('otra ventana '),
+                    );
+                  },
+                  title: Text('holas'),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

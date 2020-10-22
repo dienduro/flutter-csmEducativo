@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
+import 'package:flutter_csm_tecnologia/src/pages/form_page.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -83,7 +85,10 @@ class MenuWidget extends StatelessWidget {
       child: Material(
         color: Colors.cyan[800],
         child: InkWell(
-          onTap: () => Navigator.pushReplacementNamed(context, 'form'),
+          onTap: () => Navigator.of(context).pushReplacement(
+              CupertinoPageRoute(builder: (BuildContext context) {
+            return FormPage();
+          })),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

@@ -1,13 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/widget/menu_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
   static final String routeName = 'form';
+
+  @override
+  _FormPageState createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
+  final scaffoldmKey = GlobalKey<ScaffoldState>();
   final prefs = new UserPreferences();
+
+  bool _guardando = false;
+  File image;
+  final _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    setState(() {});
     return Scaffold(
       /* appBar: AppBar(
         title: Text('CSM Educativo'),
@@ -22,7 +39,7 @@ class FormPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                _fotoEstudiante(),
+                _fotoEstudiante(_picker),
                 SizedBox(
                   height: 20,
                 ),
@@ -74,14 +91,41 @@ class FormPage extends StatelessWidget {
 
   Widget _crearAppBar() {
     return SliverAppBar(
-      title: Text('CSM educativo'),
+      title: Text(
+        'CSM educativo',
+      ),
+      /*  actions: [
+        IconButton(
+          icon: Icon(Icons.photo),
+          onPressed: () {},
+        ),
+      ], */
       elevation: 2.0,
       backgroundColor: Colors.cyan[800],
       floating: true,
     );
   }
 
-  Widget _fotoEstudiante() {
+  Widget _fotoEstudiante(ImagePicker pickedFile) {
+    setState(() {});
+    return Stack(
+      children: [
+        _imagenLogo(image),
+        Positioned(
+          child: _buttonTakePhoto(),
+          left: 210,
+          top: 80,
+        ),
+        /*  Positioned(
+          child: _buttonEditProfile(),
+          left: 130,
+          top: 80,
+        ), */
+      ],
+    );
+  }
+
+  Widget _imagenLogo(File pickedFile) {
     return Center(
       child: Container(
         padding: EdgeInsets.all(10),
@@ -89,16 +133,16 @@ class FormPage extends StatelessWidget {
           height: 100,
           width: 100,
           child: InkWell(
-            onTap: () {},
+            onTap: _seleccionarFoto,
             child: Container(
               height: 100.0,
               decoration: BoxDecoration(
-                boxShadow: [
+                /* boxShadow: [
                   BoxShadow(color: Colors.white24, blurRadius: 30.0),
-                ],
+                ], */
                 image: DecorationImage(
-                  image:
-                      AssetImage('assets/drawable-fhd/ic_action_splash2.jpg'),
+                  image: AssetImage(pickedFile?.path ??
+                      'assets/drawable-fhd/ic_action_splash2.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(200),
@@ -107,6 +151,26 @@ class FormPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buttonTakePhoto() {
+    /* TODO: hacer que me redibujo cuando yo devuelvo la imagen en la pantalla */
+    setState(() {});
+    return CircleAvatar(
+      backgroundColor: Colors.white,
+      child: IconButton(
+          icon: Icon(
+            Icons.camera_alt,
+            color: Colors.black87,
+          ),
+          onPressed: _tomarFoto
+
+          /*  (_tomarFoto == null)
+              ? mostarSnackbar('no tomaste ninguna foto')
+              : _tomarFoto(); */
+
+          ),
     );
   }
 
@@ -161,7 +225,7 @@ class FormPage extends StatelessWidget {
           color: Colors.black,
         ),
         /* errorText: snapshot.error, */
-        hintText: 'cc',
+        hintText: 'Ti',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -298,14 +362,14 @@ class FormPage extends StatelessWidget {
             Color.fromARGB(120, 47, 188, 145),
           ])),
       child:
-          /* (snapshot.hasData) ? */ flatButtonlogin(
+          /* (snapshot.hasData) ? */ flatButtonForm(
               /* bloc, context */) /* : Container() */,
     );
     /*  },
     ); */
   }
 
-  Widget flatButtonlogin(/* LoginBloc bloc, BuildContext context */) {
+  Widget flatButtonForm(/* LoginBloc bloc, BuildContext context */) {
     return FlatButton(
         /*  color: Colors.white54, */
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
@@ -318,5 +382,25 @@ class FormPage extends StatelessWidget {
 
         /* snapshot.hasData ? () */
         );
+  }
+
+  Future _tomarFoto() async {
+    _procesarImagen(ImageSource.camera);
+    setState(() {});
+  }
+
+  Future _seleccionarFoto() async {
+    _procesarImagen(ImageSource.gallery);
+    setState(() {});
+  }
+
+  Future _procesarImagen(ImageSource origen) async {
+    final PickedFile pickedFile = await _picker.getImage(
+      source: origen,
+    );
+    image =
+        File(pickedFile?.path ?? 'assets/drawable-fhd/ic_action_splash2.jpg');
+
+    /* TODO:Pasar a la camara */
   }
 }

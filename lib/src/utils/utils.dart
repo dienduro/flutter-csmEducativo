@@ -18,7 +18,7 @@ void mostrarAlerta(BuildContext context, String mensaje) {
   );
 }
 
-void mostrarAlertaSplash(BuildContext context, String mensaje) {
+/* void mostrarAlertaSplash(BuildContext context, String mensaje) {
   showDialog(
     context: context,
     builder: (context) {
@@ -34,7 +34,7 @@ void mostrarAlertaSplash(BuildContext context, String mensaje) {
       );
     },
   );
-}
+} */
 
 void mostrarAlertaUser(BuildContext context, String mensaje) {
   showDialog(
@@ -57,3 +57,11 @@ void mostrarAlertaUser(BuildContext context, String mensaje) {
     },
   );
 }
+/*  void mostarSnackbar(String mensaje) {
+      final snackbar = SnackBar(
+        content: Text(mensaje),
+        duration: Duration(milliseconds: 1500),
+      );
+
+      scaffoldmKey.currentState.showSnackBar(snackbar);
+    } */

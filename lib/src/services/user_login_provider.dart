@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
+import 'package:flutter_csm_tecnologia/src/models/user_model.dart';
 /* import 'package:flutter_csm_tecnologia/src/models/user_model.dart'; */
 /* import 'package:flutter_csm_tecnologia/src/models/user_model.dart'; */
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
@@ -24,8 +25,10 @@ class UsuarioProvider {
       final resp = await _dio.get(url, queryParameters: authData);
 
       final Map<String, dynamic> decodeResp = resp.data;
+      final List<Usuario> userList = new List();
 
       print(decodeResp);
+      /* TODO: convertir los datos de la api pasrlos al modelo */
 
       if (decodeResp['estado'] == true) {
         //TODO:salvar el id usuario en el storage

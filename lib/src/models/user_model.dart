@@ -392,12 +392,12 @@ class Usuario {
   String identificacion;
   String nombreCompleto;
   DateTime fechaNacimiento;
-  dynamic fotoMovil;
+  String fotoMovil;
   String estado;
   String bloqueado;
   String intentosFallidos;
   String idDocente;
-  dynamic idEstudiante;
+  String idEstudiante;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
         idUsuario: json["idUsuario"],
