@@ -24,7 +24,6 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    setState(() {});
     return Scaffold(
       /* appBar: AppBar(
         title: Text('CSM Educativo'),
@@ -39,7 +38,7 @@ class _FormPageState extends State<FormPage> {
                 SizedBox(
                   height: 20,
                 ),
-                _fotoEstudiante(_picker),
+                _fotoEstudiante(image),
                 SizedBox(
                   height: 20,
                 ),
@@ -106,8 +105,7 @@ class _FormPageState extends State<FormPage> {
     );
   }
 
-  Widget _fotoEstudiante(ImagePicker pickedFile) {
-    setState(() {});
+  Widget _fotoEstudiante(File pickedFile) {
     return Stack(
       children: [
         _imagenLogo(image),
@@ -155,7 +153,6 @@ class _FormPageState extends State<FormPage> {
   }
 
   Widget _buttonTakePhoto() {
-    /* TODO: hacer que me redibujo cuando yo devuelvo la imagen en la pantalla */
     setState(() {});
     return CircleAvatar(
       backgroundColor: Colors.white,
@@ -394,13 +391,27 @@ class _FormPageState extends State<FormPage> {
     setState(() {});
   }
 
+  void mostarSnackbar(String mensaje) {
+    final snackbar = SnackBar(
+      content: Text(mensaje),
+      duration: Duration(milliseconds: 1500),
+    );
+
+    scaffoldmKey.currentState.showSnackBar(snackbar);
+  }
+
   Future _procesarImagen(ImageSource origen) async {
     final PickedFile pickedFile = await _picker.getImage(
+      imageQuality: 10,
       source: origen,
     );
     image =
         File(pickedFile?.path ?? 'assets/drawable-fhd/ic_action_splash2.jpg');
-
+    if (image != null) {
+    } else {
+      mostarSnackbar('no se guardo ninguna imagen');
+    }
+    setState(() {});
     /* TODO:Pasar a la camara */
   }
 }
