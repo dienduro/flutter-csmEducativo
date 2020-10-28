@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 /* import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart'; */
 
@@ -20,8 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
     /*  instiProv.getInstituciones(); */
     /* if (instiProv.urlDone == true) { */
     Timer(
-      Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacementNamed('institution'),
+      Duration(seconds: 5),
+      () => Navigator.of(context).pushReplacement(
+        CupertinoPageRoute(
+          builder: (context) => InstPage(),
+        ),
+      ), /* 'institution' */
     );
     /*  } else {
       mostrarAlertaSplash(context, 'lo setimos ');

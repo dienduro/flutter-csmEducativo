@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 /* import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
@@ -5,9 +7,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/widget/menu_widget.dart';
 
-class NotasPage extends StatelessWidget {
+class NotasPage extends StatefulWidget {
   static final String routeName = 'notes';
+
+  @override
+  _NotasPageState createState() => _NotasPageState();
+}
+
+class _NotasPageState extends State<NotasPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final prefs = new UserPreferences();
 
   @override
@@ -173,13 +182,14 @@ class NotasPage extends StatelessWidget {
               return Card(
                 color: Colors.white60,
                 borderOnForeground: false,
-                child: ListTile(
-                  onTap: () {
-                    Container(
-                      child: Text('otra ventana '),
-                    );
-                  },
-                  title: Text('holas'),
+                child: ExpansionTile(
+                  title: Text(
+                    'titulo',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  children: [
+                    Text('tabla de notas'),
+                  ],
                 ),
               );
             },

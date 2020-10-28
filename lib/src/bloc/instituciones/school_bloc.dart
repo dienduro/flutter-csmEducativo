@@ -11,6 +11,8 @@ class SchoolBloc with InstitucionesProvider {
   Function(InstitucionModel) get instanciaInsti =>
       _institucionesController.sink.add;
 
+  /* String get lastSchool => _institucionesController.value; */
+
   dispose() {
     _institucionesController?.close();
   }

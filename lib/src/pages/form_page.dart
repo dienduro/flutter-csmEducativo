@@ -18,7 +18,7 @@ class _FormPageState extends State<FormPage> {
   final scaffoldmKey = GlobalKey<ScaffoldState>();
   final prefs = new UserPreferences();
 
-  bool _guardando = false;
+  /* bool _guardando = false; */
   File image;
   final _picker = ImagePicker();
   @override
@@ -132,18 +132,21 @@ class _FormPageState extends State<FormPage> {
           width: 100,
           child: InkWell(
             onTap: _seleccionarFoto,
-            child: Container(
-              height: 100.0,
-              decoration: BoxDecoration(
-                /* boxShadow: [
-                  BoxShadow(color: Colors.white24, blurRadius: 30.0),
-                ], */
-                image: DecorationImage(
-                  image: AssetImage(pickedFile?.path ??
-                      'assets/drawable-fhd/ic_action_splash2.jpg'),
-                  fit: BoxFit.cover,
+            child: Hero(
+              tag: 'imglogo',
+              child: Container(
+                height: 100.0,
+                decoration: BoxDecoration(
+                  /* boxShadow: [
+                    BoxShadow(color: Colors.white24, blurRadius: 30.0),
+                  ], */
+                  image: DecorationImage(
+                    image: AssetImage(pickedFile?.path ??
+                        'assets/drawable-fhd/ic_action_splash2.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(200),
                 ),
-                borderRadius: BorderRadius.circular(200),
               ),
             ),
           ),
@@ -402,7 +405,7 @@ class _FormPageState extends State<FormPage> {
 
   Future _procesarImagen(ImageSource origen) async {
     final PickedFile pickedFile = await _picker.getImage(
-      imageQuality: 10,
+      /* imageQuality: 10, */
       source: origen,
     );
     image =
@@ -412,6 +415,5 @@ class _FormPageState extends State<FormPage> {
       mostarSnackbar('no se guardo ninguna imagen');
     }
     setState(() {});
-    /* TODO:Pasar a la camara */
   }
 }

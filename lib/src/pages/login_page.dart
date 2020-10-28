@@ -12,6 +12,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 class LoginPage extends StatefulWidget {
   static final String routeName = 'login';
@@ -22,6 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final prefs = new UserPreferences();
+  /*  bool _cargando = false; */
 
   final userProvider = new UsuarioProvider();
   /* String _userName;
@@ -33,9 +35,16 @@ class _LoginPageState extends State<LoginPage> {
     /* _userName = prefs.userName;
     _userName = prefs.idUser; */
     controllerUser = TextEditingController(text: prefs.userName);
-    controllerPassword = TextEditingController(text: prefs.passwordUser);
+    controllerPassword = TextEditingController(/* text: prefs.passwordUser */);
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerPassword?.dispose();
+    controllerUser?.dispose();
+    super.dispose();
   }
 
   @override
@@ -168,7 +177,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
         _crearPassword(bloc),
         Spacer(),
-        _crearboton(bloc),
+        /* _crearboton(bloc), */
+        _crearbotonAnimated(bloc),
+
+        /*  ProgressButton(
+          defaultWidget: const Text('I am a button'),
+          progressWidget: const CircularProgressIndicator(),
+          width: 196,
+          height: 40,
+          onPressed: () async {
+            int score = await Future.delayed(
+                const Duration(milliseconds: 3000), () => 42);
+            (score.isEven) ? _login(bloc, context) : CircularProgressIndicator;
+            // After [onPressed], it will trigger animation running backwards, from end to beginning
+          },
+        ), */
       ],
     );
   }
@@ -268,6 +291,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _crearbotonAnimated(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.loginValidStreamRx,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          /* decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(40, 90, 175, 120),
+                Color.fromARGB(120, 47, 188, 145),
+              ],
+            ),
+          ), */
+          child:
+              (snapshot.hasData) ? progressButton(bloc, context) : Container(),
+        );
+      },
+    );
+  }
+
   Widget flatButtonlogin(LoginBloc bloc, BuildContext context) {
     return FlatButton(
       /*  color: Colors.white54, */
@@ -280,6 +324,31 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () async => _login(bloc, context),
 
       /* snapshot.hasData ? () */
+    );
+  }
+
+  Widget progressButton(LoginBloc bloc, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+      child: ProgressButton(
+        /*  color: Colors.white54, */
+        /* padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+        shape: StadiumBorder(),
+        child: Text(
+          'Ingresar',
+          style: TextStyle(fontSize: 20.0, color: Colors.white60),
+        ), */
+        defaultWidget: Text(
+          'Ingresar',
+          style: TextStyle(fontSize: 20.0, color: Colors.white60),
+        ),
+        progressWidget: const CircularProgressIndicator(),
+        borderRadius: 160.0,
+        color: Colors.transparent,
+        onPressed: () async => await _login(bloc, context),
+
+        /* snapshot.hasData ? () */
+      ),
     );
   }
 
@@ -308,9 +377,9 @@ class _LoginPageState extends State<LoginPage> {
 
     final bytes = utf8.encode(bloc.lastPsswrd);
     final digest = sha1.convert(bytes).toString();
-    prefs.passwordUser = digest;
+    /* prefs.passwordUser = digest; */
 
-    Map info = await userProvider.login(bloc.lastUser, prefs.passwordUser);
+    Map info = await userProvider.login(bloc.lastUser, digest);
 
     if (info['estado']) {
       Navigator.pushReplacementNamed(context, 'notes');

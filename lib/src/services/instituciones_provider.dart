@@ -13,10 +13,10 @@ class InstitucionesProvider {
       final resp = await http.get(url);
       final List decodedData = json.decode(resp.body);
       final List<InstitucionModel> institutos = new List();
-      if (decodedData == null) {
+      /*  if (decodedData == null) {
         urlDone = false;
         return [];
-      }
+      } */
       decodedData.forEach((element) {
         final instTemp = InstitucionModel.fromJson(element);
         institutos.add(instTemp);

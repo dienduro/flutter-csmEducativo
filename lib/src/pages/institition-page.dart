@@ -26,8 +26,8 @@ class _InstPageState extends State<InstPage> {
 
   @override
   void initState() {
-    _textController = TextEditingController(text: prefs.school);
-    selectedSchool ?? Container();
+    _textController = TextEditingController();
+    /* selectedSchool ?? Container(); */
     _textController.addListener(schoolBloc.instanciaInsti(selectedSchool));
 
     super.initState();
@@ -38,7 +38,7 @@ class _InstPageState extends State<InstPage> {
     // TODO: implement dispose
     super.dispose();
     _textController.dispose();
-    _textController.removeListener(() {});
+    /* _textController.removeListener(() {}); */
   }
 
   @override
@@ -111,7 +111,7 @@ class _InstPageState extends State<InstPage> {
   }
 
   Widget _crearFondoForm(BuildContext context) {
-    prefs.lastPage = InstPage.routeName;
+    /* prefs.lastPage = InstPage.routeName; */
     return Center(
       child: Container(
         width: 330.0,
@@ -148,7 +148,9 @@ class _InstPageState extends State<InstPage> {
               SizedBox(
                 height: 10,
               ),
-              (selectedSchool != null) ? _botonAcceso(context) : Container(),
+              (selectedSchool != null)
+                  ? _botonAcceso(context)
+                  : SizedBox.shrink(),
             ],
           ),
         ),
@@ -175,7 +177,7 @@ class _InstPageState extends State<InstPage> {
         }
       },
     );
-    hasData = true;
+    /* hasData = true; */
     info = hasData;
     return info;
   }
@@ -187,19 +189,28 @@ class _InstPageState extends State<InstPage> {
         return TextField(
           onTap: () => _search(),
           controller: _textController,
+          autofocus: false,
+          focusNode: FocusNode(
+            canRequestFocus: false,
+            skipTraversal: true,
+            descendantsAreFocusable: false,
+          ),
+          enableInteractiveSelection: false,
           style: TextStyle(color: Colors.black),
           cursorColor: Colors.black,
           decoration: InputDecoration(
             icon: Icon(
               FontAwesomeIcons.school,
-              size: 20.0,
+              size: 24.0,
             ),
-            filled: true,
+            filled: false,
             fillColor: Colors.white38,
             labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-            labelText: (selectedSchool != null)
+            labelText:
+                /* (selectedSchool != null)
                 ? selectedSchool.nombre
-                : 'Institucion',
+                : */
+                'Institución',
             hintStyle: TextStyle(color: Colors.black),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),

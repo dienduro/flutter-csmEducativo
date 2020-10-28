@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
 import 'package:flutter_csm_tecnologia/src/pages/form_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/notas_page.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,7 +18,7 @@ class MenuWidget extends StatelessWidget {
 /*     void _openDrawer() => _scaffoldKey.currentState.openDrawer();
  */
 
-    /* void _closeDrawer() => Navigator.of(context).pop(); */
+    void _closeDrawer() => Navigator.of(context).pop();
     return Drawer(
       elevation: 35.0,
       key: _scaffoldKey,
@@ -39,7 +40,15 @@ class MenuWidget extends StatelessWidget {
                   leading: Icon(FontAwesomeIcons.eye, color: Colors.blueGrey),
                   title: Text('Valoraciones'),
                   onTap: () {
-                    Navigator.of(context).popAndPushNamed('notes');
+                    _closeDrawer();
+                    Navigator.of(context).pushReplacement(
+                      CupertinoPageRoute(
+                        builder: (BuildContext context) {
+                          return NotasPage();
+                        },
+                      ),
+                    );
+                    /*  Navigator.of(context).pushReplacementNamed('notes'); */
                   },
                 ),
                 ListTile(
@@ -78,6 +87,7 @@ class MenuWidget extends StatelessWidget {
   }
 
   Widget imageDrawer(BuildContext context) {
+    void _closeDrawer() => Navigator.of(context).pop();
     final prefs = new UserPreferences();
     return Container(
       height: 200,
@@ -85,10 +95,16 @@ class MenuWidget extends StatelessWidget {
       child: Material(
         color: Colors.cyan[800],
         child: InkWell(
-          onTap: () => Navigator.of(context).pushReplacement(
-              CupertinoPageRoute(builder: (BuildContext context) {
-            return FormPage();
-          })),
+          onTap: () {
+            _closeDrawer();
+            Navigator.of(context).pushReplacement(
+              CupertinoPageRoute(
+                builder: (BuildContext context) {
+                  return FormPage();
+                },
+              ),
+            );
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -98,18 +114,21 @@ class MenuWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 100,
                     width: 100,
-                    child: Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(color: Colors.white24, blurRadius: 30.0),
-                        ],
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'assets/drawable-fhd/ic_action_splash2.jpg'),
-                          fit: BoxFit.cover,
+                    child: Hero(
+                      tag: 'imglogo1',
+                      child: Container(
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(color: Colors.white24, blurRadius: 30.0),
+                          ],
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/drawable-fhd/ic_action_splash2.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(200),
                         ),
-                        borderRadius: BorderRadius.circular(200),
                       ),
                     ),
                   ),

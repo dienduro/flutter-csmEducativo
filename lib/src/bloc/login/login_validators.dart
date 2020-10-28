@@ -15,7 +15,7 @@ class Validators {
         ? sink.add(email)
         : sink.addError('Email incorrecto'); */
 
-    (user.length >= 4)
+    (user.isNotEmpty)
         ? sink.add(user)
         : sink.addError('no es un usuario valido');
   });
@@ -26,9 +26,9 @@ class Validators {
 
     if (n == null) {
       sink.addError('Solo numeros por favor');
-    } else if (pass.length < 3) {
+    } else if (pass.isEmpty) { 
       /* pass = digest; */
-      sink.addError('Mas de 3 caracteres.');
+      sink.addError('ingrese una constraseña');
     } else {
       return sink.add(pass);
     }

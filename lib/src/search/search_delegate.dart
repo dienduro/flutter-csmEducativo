@@ -50,13 +50,15 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    return Center(
+      child: Text('favor escriba su institución'),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
-      return Center(child: Text('no se encontraron resultados'));
+      return Center(child: Text('por favor realice la busqueda'));
     }
 
     return _crearListadoVistas();
@@ -69,19 +71,30 @@ class DataSearch extends SearchDelegate<InstitucionModel> {
         if (!snapshot.hasData) {
           return Center(
             child: Text(
-              'No data',
+              'no hay resultados',
             ),
           );
         }
 
         final instiList = snapshot.data;
+
         final result = instiList.where(
           (element) => element.nombre.toLowerCase().contains(
                 query.toLowerCase().substring(0, query.length),
               ),
         );
 
-        return _listViewResult(instiList, result);
+        if (query.length > 3) {
+          if (result.length == 1)
+            return _listViewResult(instiList, result);
+          else
+            return Center(
+              child: Text('no se encontro el colegio'),
+            );
+        } else
+          return Center(
+            child: CircularProgressIndicator(),
+          );
       },
     );
   }
