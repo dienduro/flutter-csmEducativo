@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
-import 'package:flutter_csm_tecnologia/src/pages/form_page.dart';
-import 'package:flutter_csm_tecnologia/src/pages/notas_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/form_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/notas_page.dart';
+/* import 'package:flutter_csm_tecnologia/src/pages/form_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages/notas_page.dart'; */
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,10 +66,10 @@ class MenuWidget extends StatelessWidget {
                 ), */
                 ListTile(
                   /*  leading: Icon(Icons.close, color: Colors.blueGrey), */
-                  title: Text('Cerrar sesion'),
+                  title: Text('Cerrar sesión'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    mostrarAlertaUser(context, 'Desea cerrar sesion ?');
+                    mostrarAlertaUser(context, '¿ Desea cerrar sesión ?');
                     /* _closeDrawer(); */
                     /* Navigator.pushReplacementNamed(context, 'home'); */
                   },

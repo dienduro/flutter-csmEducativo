@@ -1,11 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_bloc.dart';
-/* import 'package:flutter_csm_tecnologia/src/models/user_model.dart'; */
-/* import 'package:flutter_csm_tecnologia/src/models/user_model.dart'; */
-/* import 'package:flutter_csm_tecnologia/src/models/user_model.dart'; */
+
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
-/* import 'package:http/http.dart' as http;
- */ /* import 'package:crypto/crypto.dart'; */
 
 class UsuarioProvider {
   LoginBloc userBloc;

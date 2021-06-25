@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_csm_tecnologia/src/pages/change_password.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/change_password.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/form_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/home-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/institition-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/login_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/notas_page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/splash_screen.dart';
+/* import 'package:flutter_csm_tecnologia/src/pages/change_password.dart';
 import 'package:flutter_csm_tecnologia/src/pages/form_page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/home-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/notas_page.dart';
-import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart';
+import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart'; */
 
 Map<String, WidgetBuilder> getPageRoutes() {
   return <String, WidgetBuilder>{

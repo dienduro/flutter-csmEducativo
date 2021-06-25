@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
+/* import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart'; */
+import 'package:flutter_csm_tecnologia/src/pages_000/institition-page.dart';
 /* import 'package:flutter_csm_tecnologia/src/services/instituciones_provider.dart';
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart'; */
 

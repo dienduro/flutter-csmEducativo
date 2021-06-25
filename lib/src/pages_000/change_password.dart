@@ -12,18 +12,24 @@ class ChangePassPage extends StatelessWidget {
         drawer: MenuWidget(),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              _actualPass(context),
-              SizedBox(
-                height: 40,
-              ),
-              _newPass(context),
-              SizedBox(
-                height: 40,
-              ),
-              _crearboton(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _actualPass(context),
+                SizedBox(
+                  height: 40,
+                ),
+                _newPass(context),
+                SizedBox(
+                  height: 40,
+                ),
+                _confimPass(context),
+                SizedBox(
+                  height: 40,
+                ),
+                _crearboton(),
+              ],
+            ),
           ),
         ));
   }
@@ -43,7 +49,7 @@ class ChangePassPage extends StatelessWidget {
         labelText: 'Contraseña Actual:',
         hintStyle: TextStyle(color: Colors.black),
         /* errorText: snapshot.error, */
-        hintText: 'last password',
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -65,12 +71,39 @@ class ChangePassPage extends StatelessWidget {
         filled: true,
         fillColor: Colors.black12,
         labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-        labelText: 'Nuevo Contraseña:',
+        labelText: 'Contraseña Nueva:',
         hintStyle: TextStyle(
           color: Colors.black,
         ),
         /* errorText: snapshot.error, */
-        hintText: 'last password',
+
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
+      ),
+      keyboardType: TextInputType.emailAddress,
+      /* onChanged: bloc.changeUser, */
+    );
+  }
+
+  Widget _confimPass(BuildContext context) {
+    return TextField(
+      /* controller: controllerUser, */
+      obscureText: true,
+      style: TextStyle(color: Colors.black),
+      cursorColor: Colors.black,
+      decoration: InputDecoration(
+        /* icon: Icon(Icons.alternate_email, color: Colors.black), */
+        filled: true,
+        fillColor: Colors.black12,
+        labelStyle: TextStyle(color: Colors.black, fontSize: 20),
+        labelText: 'Confirmar Contraseña Nueva:',
+        hintStyle: TextStyle(
+          color: Colors.black,
+        ),
+        /* errorText: snapshot.error, */
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -105,9 +138,13 @@ class ChangePassPage extends StatelessWidget {
         /*  color: Colors.white54, */
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
         shape: StadiumBorder(),
-        child: Text(
-          'Cambiar',
-          style: TextStyle(fontSize: 20.0, color: Colors.black),
+        child: Row(
+          children: [
+            Text(
+              'Guardar',
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
+            ),
+          ],
         ),
         onPressed: () {} /* async => _login(bloc, context), */
 

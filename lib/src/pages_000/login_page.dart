@@ -12,6 +12,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
 import 'package:flutter_csm_tecnologia/src/utils/utils.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -179,19 +180,6 @@ class _LoginPageState extends State<LoginPage> {
         Spacer(),
         /* _crearboton(bloc), */
         _crearbotonAnimated(bloc),
-
-        /*  ProgressButton(
-          defaultWidget: const Text('I am a button'),
-          progressWidget: const CircularProgressIndicator(),
-          width: 196,
-          height: 40,
-          onPressed: () async {
-            int score = await Future.delayed(
-                const Duration(milliseconds: 3000), () => 42);
-            (score.isEven) ? _login(bloc, context) : CircularProgressIndicator;
-            // After [onPressed], it will trigger animation running backwards, from end to beginning
-          },
-        ), */
       ],
     );
   }
@@ -208,16 +196,15 @@ class _LoginPageState extends State<LoginPage> {
             cursorColor: Colors.white24,
             decoration: InputDecoration(
               icon: Icon(
-                Icons.alternate_email,
+                Icons.account_box,
                 color: Colors.white,
               ),
               filled: true,
               fillColor: Colors.black12,
               labelStyle: TextStyle(color: Colors.white),
-              labelText: 'Username:',
+              labelText: 'Usuario:',
               hintStyle: TextStyle(color: Colors.white),
               errorText: snapshot.error,
-              hintText: 'nombre de usuario',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -255,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
               filled: true,
               fillColor: Colors.black12,
               labelStyle: TextStyle(color: Colors.white),
-              labelText: 'Password:',
+              labelText: 'Contraseña:',
               hintStyle: TextStyle(color: Colors.white),
               errorText: snapshot.error,
               /* counterText: snapshot.data, */
@@ -265,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
               counterStyle:
                   TextStyle(color: Theme.of(context).primaryColorLight),
             ),
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             onChanged: bloc.changePass,
           ),
         );
@@ -385,8 +372,14 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacementNamed(context, 'notes');
       prefs.userName = bloc.lastUser;
     } else {
-      mostrarAlerta(context, info['mensaje']);
+      mostrarAlerta(
+        context,
+        Html(
+          data: info['mensaje'],
+        ),
+      );
     }
+    /* return; */
 
     /* if (login.estado == true) {
     Navigator.of(context).pushReplacementNamed('notes');

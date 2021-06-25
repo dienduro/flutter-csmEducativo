@@ -17,18 +17,13 @@ class Validators {
 
     (user.isNotEmpty)
         ? sink.add(user)
-        : sink.addError('no es un usuario valido');
+        : sink.addError('Debe ingresar el usuario');
   });
 
   final validarPsswrd =
       StreamTransformer<String, String>.fromHandlers(handleData: (pass, sink) {
-    final n = num.tryParse(pass);
-
-    if (n == null) {
-      sink.addError('Solo numeros por favor');
-    } else if (pass.isEmpty) { 
-      /* pass = digest; */
-      sink.addError('ingrese una constraseña');
+    if (pass.isEmpty) {
+      sink.addError('Debe ingresar la contraseña');
     } else {
       return sink.add(pass);
     }

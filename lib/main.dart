@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_csm_tecnologia/src/bloc/login/login_inherited.dart';
 
 import 'package:flutter_csm_tecnologia/src/routes/routes.dart';
+import 'package:flutter_csm_tecnologia/src/services/notes_services.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 
 import 'package:flutter_csm_tecnologia/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new UserPreferences();
   await prefs.initPrefs();
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (_) => new NoteServices(),
+      lazy: false,
+    )
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

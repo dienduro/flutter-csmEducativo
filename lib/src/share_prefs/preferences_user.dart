@@ -89,7 +89,7 @@ class UserPreferences {
   }
 
   get lastPage {
-    return _prefs.getString('lastPage') ?? 'home';
+    return _prefs.getString('lastPage') ?? 'login';
   }
 
   set lastPage(String value) {

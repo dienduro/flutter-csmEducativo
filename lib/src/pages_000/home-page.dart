@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
+/* import 'package:flutter_csm_tecnologia/src/pages/institition-page.dart';
 import 'package:flutter_csm_tecnologia/src/pages/login_page.dart';
-import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart';
+import 'package:flutter_csm_tecnologia/src/pages/splash_screen.dart'; */
+import 'package:flutter_csm_tecnologia/src/pages_000/institition-page.dart';
+import 'package:flutter_csm_tecnologia/src/pages_000/splash_screen.dart';
 import 'package:flutter_csm_tecnologia/src/share_prefs/preferences_user.dart';
 
 class HomePage extends StatelessWidget {
@@ -30,7 +32,7 @@ class _Paginas extends StatelessWidget {
       children: [
         _splashPage(),
         _institutionPage(),
-        _loginPage(),
+        /* _loginPage(), */
       ],
       /*  ), */
     );
@@ -45,7 +47,7 @@ class _Paginas extends StatelessWidget {
     return InstPage();
   }
 
-  Widget _loginPage() {
-    return LoginPage();
-  }
+ /*  Widget _loginPage() {
+    return LogicalKeySet(key1);
+  } */
 }

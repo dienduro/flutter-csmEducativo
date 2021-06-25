@@ -101,7 +101,8 @@ class _FormPageState extends State<FormPage> {
       ], */
       elevation: 2.0,
       backgroundColor: Colors.cyan[800],
-      floating: true,
+      floating: false,
+      pinned: false,
     );
   }
 
@@ -178,6 +179,7 @@ class _FormPageState extends State<FormPage> {
     TextEditingController _textEditingController;
 
     return TextFormField(
+      enabled: false,
       initialValue: prefs.studentName,
       /* controller: controllerUser, */
       controller: _textEditingController,
@@ -193,30 +195,25 @@ class _FormPageState extends State<FormPage> {
         hoverColor: Colors.black,
         fillColor: Colors.black12,
         labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-        labelText: 'Nombre Completo :',
+        labelText: 'Nombre Completo:',
         hintStyle: TextStyle(color: Colors.black),
-        /* errorText: snapshot.error, */
-        hintText: 'full name',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
         counterStyle: TextStyle(color: Colors.black),
       ),
       keyboardType: TextInputType.emailAddress,
-      /* onChanged: bloc.changeUser, */
     );
   }
 
   Widget _id(BuildContext context) {
     return TextFormField(
       enabled: false,
-      /* controller: controllerUser, */
       initialValue: prefs.identificacion,
       style: TextStyle(color: Colors.black),
       cursorColor: Colors.black,
       decoration: InputDecoration(
         prefixIcon: Icon(FontAwesomeIcons.idCard),
-        /* icon: Icon(Icons.alternate_email, color: Colors.black), */
         filled: true,
         fillColor: Colors.black12,
         labelStyle: TextStyle(color: Colors.black, fontSize: 20),
@@ -224,7 +221,6 @@ class _FormPageState extends State<FormPage> {
         hintStyle: TextStyle(
           color: Colors.black,
         ),
-        /* errorText: snapshot.error, */
         hintText: 'Ti',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -232,7 +228,6 @@ class _FormPageState extends State<FormPage> {
         counterStyle: TextStyle(color: Theme.of(context).primaryColorLight),
       ),
       keyboardType: TextInputType.number,
-      /* onChanged: bloc.changeUser, */
     );
   }
 
@@ -243,13 +238,12 @@ class _FormPageState extends State<FormPage> {
       style: TextStyle(color: Colors.black),
       cursorColor: Colors.black,
       decoration: InputDecoration(
-        /* icon: Icon(Icons.alternate_email, color: Colors.black), */
         prefixIcon: Icon(Icons.email_outlined),
         filled: true,
         hoverColor: Colors.black,
         fillColor: Colors.black12,
         labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-        labelText: 'Email :',
+        labelText: 'Correo Electrónico:',
         hintStyle: TextStyle(color: Colors.black),
         /* errorText: snapshot.error, */
         hintText: 'educativo@csm.com',
@@ -277,8 +271,8 @@ class _FormPageState extends State<FormPage> {
           filled: true,
           hoverColor: Colors.black,
           fillColor: Colors.black12,
-          labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-          labelText: 'Birthday :',
+          labelStyle: TextStyle(color: Colors.black, fontSize: 16),
+          labelText: 'Fecha de Nacimiento:',
           hintStyle: TextStyle(color: Colors.black),
           /* errorText: snapshot.error, */
           hintText: 'AAAA-MM-DD',
@@ -308,10 +302,10 @@ class _FormPageState extends State<FormPage> {
           hoverColor: Colors.black,
           fillColor: Colors.black12,
           labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-          labelText: 'Phone :',
+          labelText: 'Teléfono:',
           hintStyle: TextStyle(color: Colors.black),
           /* errorText: snapshot.error, */
-          hintText: 'full name',
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
@@ -336,10 +330,10 @@ class _FormPageState extends State<FormPage> {
         hoverColor: Colors.black,
         fillColor: Colors.black12,
         labelStyle: TextStyle(color: Colors.black, fontSize: 20),
-        labelText: 'Address :',
+        labelText: 'Dirección:',
         hintStyle: TextStyle(color: Colors.black),
         /* errorText: snapshot.error, */
-        hintText: 'direccion',
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -375,7 +369,7 @@ class _FormPageState extends State<FormPage> {
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
         shape: StadiumBorder(),
         child: Text(
-          'Cambiar',
+          'Guardar',
           style: TextStyle(fontSize: 20.0, color: Colors.black),
         ),
         onPressed: () {} /* async => _login(bloc, context), */
@@ -406,11 +400,14 @@ class _FormPageState extends State<FormPage> {
   Future _procesarImagen(ImageSource origen) async {
     final PickedFile pickedFile = await _picker.getImage(
       /* imageQuality: 10, */
+      imageQuality: 50,
       source: origen,
     );
     image =
         File(pickedFile?.path ?? 'assets/drawable-fhd/ic_action_splash2.jpg');
+
     if (image != null) {
+      print('algo salio mal');
     } else {
       mostarSnackbar('no se guardo ninguna imagen');
     }
