@@ -17,7 +17,7 @@ class UsuarioProvider {
     };
 
     try {
-      final _url = 'http://demo.csmeducativo.com/Servicios/sesion';
+      final _url = '';
       final resp = await _dio.get(_url, queryParameters: authData);
 
       final Map<String, dynamic> decodeResp = resp.data;
